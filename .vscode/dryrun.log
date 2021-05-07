@@ -1,0 +1,6 @@
+make all --dry-run --keep-going --print-directory
+make: Entering directory '/workspaces/cpp-setup-makefile'
+make: Leaving directory '/workspaces/cpp-setup-makefile'
+ 
+make: *** No rule to make target 'all'.
+ 

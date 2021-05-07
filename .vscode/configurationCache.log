@@ -1,0 +1,1 @@
+{"buildTargets":["clean","coverage","debug","format","gdb","main","run","test","unit_test","unit_test_src","valgrind","valgrind-v"],"launchTargets":[],"customConfigurationProvider":{"workspaceBrowse":{"browsePath":[],"compilerArgs":[]},"fileIndex":[]}}

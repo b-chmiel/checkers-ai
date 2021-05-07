@@ -1,0 +1,313 @@
+make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'all'.  Stop.
+ 
+# GNU Make 4.2.1
+# Built for x86_64-pc-linux-gnu
+# Copyright (C) 1988-2016 Free Software Foundation, Inc.
+# License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+# This is free software: you are free to change and redistribute it.
+# There is NO WARRANTY, to the extent permitted by law.
+
+# Make data base, printed on Fri May  7 16:52:58 2021
+
+# Variables
+
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# automatic
+?F = $(notdir $?)
+# default
+.SHELLFLAGS := -c
+# makefile (from 'Makefile', line 10)
+RELEASE_FLAGS = -O2 -s -DNDEBUG
+# environment
+VSCODE_AGENT_FOLDER = /home/vscode/.vscode-server-insiders
+# environment
+VSCODE_LOG_NATIVE = false
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# automatic
+@F = $(notdir $@)
+# makefile
+CURDIR := /workspaces/cpp-setup-makefile
+# makefile
+SHELL = /bin/sh
+# environment
+VSCODE_NLS_CONFIG = {"locale":"en","availableLanguages":{}}
+# makefile (from 'Makefile', line 1)
+MAKEFILE_LIST :=  Makefile
+# makefile (from 'Makefile', line 16)
+LIB_DIR = lib
+# 'override' directive
+GNUMAKEFLAGS := 
+# environment
+VSCODE_VERBOSE_LOGGING = true
+# environment
+VSCODE_CWD = /vscode/vscode-server-insiders/bin/x64/fe23c2041f848d6c2f6bd27875112a37bcc82f84-insider
+# default
+MAKE_HOST := x86_64-pc-linux-gnu
+# environment
+PATH = /vscode/vscode-server-insiders/bin/x64/fe23c2041f848d6c2f6bd27875112a37bcc82f84-insider/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+# makefile (from 'Makefile', line 19)
+TST_SRCS = $(shell find $(TST_DIR) -name '*.cc' ; find $(SRC_DIR) -name '*.cc' ! -name 'main.cc')
+# environment
+VSCODE_LOG_STACK = false
+# environment
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-9de8321a-a0a7-42e2-90d8-10bd25152aad.sock
+# default
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
+# environment
+SSH_AUTH_SOCK = /tmp/vscode-ssh-auth-74b613a60ad7750ad587be263c579f0285cbcd22.sock
+# automatic
+%F = $(notdir $%)
+# environment
+VSCODE_PIPE_LOGGING = true
+# environment
+PWD = /workspaces/cpp-setup-makefile
+# default
+.LOADED := 
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/server/remoteExtensionHostProcess
+# environment
+HOME = /home/vscode
+# environment
+REMOTE_CONTAINERS = true
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+# automatic
++F = $(notdir $+)
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# environment
+HOSTNAME = 5e9ceab9a888
+# environment
+MAKELEVEL := 0
+# default
+MAKE = $(MAKE_COMMAND)
+# default
+MAKECMDGOALS := all
+# makefile (from 'Makefile', line 18)
+SRCS = $(shell find $(SRC_DIR) -name '*.cc')
+# makefile (from 'Makefile', line 4)
+GCOV = gcov
+# default
+MAKE_VERSION := 4.2.1
+# makefile
+.DEFAULT_GOAL := main
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# makefile (from 'Makefile', line 14)
+OUT_DIR = build
+# environment
+REMOTE_CONTAINERS_IPC = /tmp/vscode-remote-containers-ipc-74b613a60ad7750ad587be263c579f0285cbcd22.sock
+# default
+MAKE_COMMAND := make
+# default
+.VARIABLES := 
+# automatic
+*F = $(notdir $*)
+# makefile
+MAKEFLAGS = pqrR
+# environment
+MFLAGS = -pqrR
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# environment
+BROWSER = /vscode/vscode-server-insiders/bin/x64/fe23c2041f848d6c2f6bd27875112a37bcc82f84-insider/bin/helpers/browser.sh
+# makefile (from 'Makefile', line 7)
+COV_FLAGS = -lgcov -coverage
+# makefile (from 'Makefile', line 15)
+COV_DIR = coverage
+# default
+MAKEFILES := 
+# makefile (from 'Makefile', line 13)
+TST_DIR = test
+# makefile (from 'Makefile', line 12)
+SRC_DIR = src
+# automatic
+<F = $(notdir $<)
+# makefile (from 'Makefile', line 9)
+DEBUG_FLAGS = -Wall -Wextra -pedantic -g
+# makefile (from 'Makefile', line 20)
+TST_LIBS = $(TST_DIR)/catch_amalgamated.cpp
+# makefile (from 'Makefile', line 3)
+CXX = ccache clang++
+# environment
+LC_ALL = C
+# automatic
+^F = $(notdir $^)
+# makefile (from 'Makefile', line 8)
+GCOV_FLAGS = -r . --html --html-details
+# default
+SUFFIXES := 
+# makefile (from 'Makefile', line 5)
+GCOVR = gcovr
+# makefile (from 'Makefile', line 1)
+LIB_NAME = main
+# environment
+REMOTE_CONTAINERS_SOCKETS = ["/tmp/vscode-ssh-auth-74b613a60ad7750ad587be263c579f0285cbcd22.sock","/home/vscode/.gnupg/S.gpg-agent"]
+# default
+.INCLUDE_DIRS = /usr/include /usr/local/include /usr/include
+# environment
+VSCODE_INJECT_NODE_MODULE_LOOKUP_PATH = /vscode/vscode-server-insiders/bin/x64/fe23c2041f848d6c2f6bd27875112a37bcc82f84-insider/remote/node_modules
+# default
+.RECIPEPREFIX := 
+# environment
+LANG = C
+# environment
+VSCODE_EXTHOST_WILL_SEND_SOCKET = true
+# variable set hash-table stats:
+ 
+# Load=75/1024=7%, Rehash=0, Collisions=7/102=7%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# . (device 64769, inode 5366162): 11 files, no impossibilities.
+
+# 11 files, no impossibilities in 1 directories.
+
+# Implicit Rules
+
+# No implicit rules.
+
+# Files
+
+gdb: debug
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 57):
+	gdb ./$(OUT_DIR)/$(LIB_NAME)
+
+# Not a target:
+all:
+#  Command line target.
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has not been updated.
+
+.PHONY: run clean valgrind test coverage format gdb
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+format:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 51):
+	clang-format  -i $(shell find . -name '*.cc') $(shell find . -name '*.hpp' ! -name 'catch_amalgamated.hpp') -style=webkit
+
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  Last modified 2021-05-07 16:52:53.010317255
+#  File has been updated.
+#  Successfully updated.
+
+debug:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 30):
+	mkdir -p $(OUT_DIR)
+	$(CXX) $(DEBUG_FLAGS) $(SRCS) -I. -o $(OUT_DIR)/$(LIB_NAME)
+	rm -f *.o
+
+test: unit_test_src
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 42):
+	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --track-origins=yes ./$(OUT_DIR)/unit_test_src
+
+unit_test_src:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 38):
+	$(CXX) $(DEBUG_FLAGS) $(TST_SRCS)  $(TST_LIBS) -L$(OUT_DIR) -o $(OUT_DIR)/unit_test_src -I$(SRC_DIR) 
+	mkdir -p $(COV_DIR)
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+run: main
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 35):
+	./build/main
+
+clean:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 54):
+	-rm -rf $(OUT_DIR) $(COV_DIR) 
+
+coverage:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+valgrind-v: debug
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 48):
+	valgrind --tool=memcheck -v --leak-check=full --show-reachable=yes --track-origins=yes ./$(OUT_DIR)/$(LIB_NAME)
+
+main:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 25):
+	mkdir -p $(OUT_DIR)
+	$(CXX) $(RELEASE_FLAGS) $(SRCS) -I. -o $(OUT_DIR)/$(LIB_NAME)
+	rm -f *.o
+
+valgrind: debug
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 45):
+	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --track-origins=yes ./$(OUT_DIR)/$(LIB_NAME) 
+
+# files hash-table stats:
+# Load=16/1024=2%, Rehash=0, Collisions=0/44=0%
+# VPATH Search Paths
+
+# No 'vpath' search paths.
+
+# No general ('VPATH' variable) search path.
+
+# strcache buffers: 1 (0) / strings = 26 / storage = 197 B / avg = 7 B
+# current buf: size = 8162 B / used = 197 B / count = 26 / avg = 7 B
+
+# strcache performance: lookups = 54 / hit rate = 51%
+# hash-table stats:
+# Load=26/8192=0%, Rehash=0, Collisions=1/54=2%
+# Finished Make data base on Fri May  7 16:52:58 2021
+
+ 
