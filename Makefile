@@ -35,7 +35,10 @@ run: $(LIB_NAME)
 	./build/main
 
 unit_test_src: 
-	$(CXX) $(DEBUG_FLAGS) $(TST_SRCS)  $(TST_LIBS) -L$(OUT_DIR) -o $(OUT_DIR)/unit_test_src -I$(SRC_DIR) 
+	$(CXX) -c $(TST_LIBS) 
+	ar -rcs $(OUT_DIR)/catch.a *.o
+	rm -f *.o
+	$(CXX) $(DEBUG_FLAGS) $(TST_SRCS) $(OUT_DIR)/catch.a -L$(OUT_DIR) -o $(OUT_DIR)/unit_test_src -I$(SRC_DIR) 
 	mkdir -p $(COV_DIR)
 
 test: unit_test_src
