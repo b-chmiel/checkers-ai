@@ -1,6 +1,6 @@
 LIB_NAME = main
 
-CXX = ccache clang++
+CXX = ccache clang++ -std=c++17
 GCOV = gcov
 GCOVR = gcovr
 
@@ -27,12 +27,15 @@ $(LIB_NAME):
 	rm -f *.o
 
 debug: 
-	scan-build make
+	scan-build  make
 	mkdir -p $(OUT_DIR)
 	$(CXX) $(DEBUG_FLAGS) $(SRCS) -I. -o $(OUT_DIR)/$(LIB_NAME)
 	rm -f *.o
 
-run: debug 
+run: $(LIB_NAME)
+	./build/main
+
+runDebug: debug
 	./build/main
 
 unit_test_src: 

@@ -43,7 +43,25 @@
         "typeinfo": "cpp",
         "utility": "cpp",
         "variant": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "bit": "cpp",
+        "bitset": "cpp",
+        "condition_variable": "cpp",
+        "cstdarg": "cpp",
+        "cstring": "cpp",
+        "map": "cpp",
+        "set": "cpp",
+        "algorithm": "cpp",
+        "iterator": "cpp",
+        "memory_resource": "cpp",
+        "random": "cpp",
+        "string": "cpp",
+        "future": "cpp",
+        "mutex": "cpp",
+        "regex": "cpp",
+        "shared_mutex": "cpp",
+        "thread": "cpp",
+        "propagate_const": "cpp"
     },
     "clang-format.executable": "/usr/bin/clang-format"
 }
