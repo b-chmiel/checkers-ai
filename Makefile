@@ -27,11 +27,12 @@ $(LIB_NAME):
 	rm -f *.o
 
 debug: 
+	scan-build make
 	mkdir -p $(OUT_DIR)
 	$(CXX) $(DEBUG_FLAGS) $(SRCS) -I. -o $(OUT_DIR)/$(LIB_NAME)
 	rm -f *.o
 
-run: $(LIB_NAME)
+run: debug 
 	./build/main
 
 unit_test_src: 

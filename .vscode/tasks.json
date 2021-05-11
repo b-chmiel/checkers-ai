@@ -5,11 +5,17 @@
             "type": "shell",
             "label": "build",
             "command": "make debug",
+            "detail": "compiler: \"make debug\""
+        },
+        {
+            "type": "shell",
+            "label": "run",
+            "command": "make run",
+            "problemMatcher": [],
             "group": {
                 "kind": "build",
                 "isDefault": true
-            },
-            "detail": "compiler: \"make debug\""
+            }
         }
     ]
 }

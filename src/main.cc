@@ -1,15 +1,10 @@
-#include "greet/hello-greet.hpp"
-#include "greet/time/hello-time.hpp"
+#include "board.h"
 #include <iostream>
 #include <string>
 
-int main(int argc, char** argv)
+int main()
 {
-    std::string who = "world";
-    if (argc > 1) {
-        who = argv[1];
-    }
-    std::cout << get_greet(who) << std::endl;
-    print_localtime();
+    auto board = board::Checkerboard();
+    board.Show();
     return 0;
 }
