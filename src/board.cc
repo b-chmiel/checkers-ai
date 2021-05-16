@@ -23,6 +23,7 @@ Checkerboard::Checkerboard()
                 Checkerboard::state[i][j] = piece::Piece(player::PlayerType::NONE, piece::PieceType::EMPTY);
             } else {
                 Checkerboard::state[i][j] = piece::Piece(currentPlayer, piece::PieceType::MAN);
+                Checkerboard::piecesAlive[currentPlayer]++;
             }
         }
     }
@@ -102,10 +103,11 @@ bool Checkerboard::Move(const std::vector<Position> path)
             continue;
         }
 
-        if (IsLegalMove(last, current)) {
-            MovePiece(last, current);
-        } else {
+        MoveType move = ValidatedMoveType(last, current);
+        if (move == MoveType::ILLEGAL) {
             return false;
+        } else {
+            MovePiece(last, current, move);
         }
 
         last = current;
@@ -115,29 +117,29 @@ bool Checkerboard::Move(const std::vector<Position> path)
         PromotePiece(last);
     }
 
-    Checkerboard::currentPlayer = player::GetAnotherPlayer(Checkerboard::currentPlayer);
+    Checkerboard::currentPlayer = player::Player::GetAnotherPlayer(Checkerboard::currentPlayer);
 
     return true;
 }
 
-bool Checkerboard::IsLegalMove(const Position& from, const Position& to)
+MoveType Checkerboard::ValidatedMoveType(const Position& from, const Position& to)
 {
     auto startField = GetFieldPiece(from);
     auto endField = GetFieldPiece(to);
 
     if (startField.player != Checkerboard::currentPlayer || endField.player != player::NONE) {
-        return false;
+        return MoveType::ILLEGAL;
     }
 
     MoveType type = GetMoveType(from, to);
 
     if (type == MoveType::SHORT) {
-        return ValidateShortMove(from, to);
+        return ValidateShortMove(from, to) ? MoveType::SHORT : MoveType::ILLEGAL;
     } else if (type == MoveType::LONG) {
-        return ValidateLongMove(from, to);
+        return ValidateLongMove(from, to) ? MoveType::LONG : MoveType::ILLEGAL;
     }
 
-    return false;
+    return MoveType::ILLEGAL;
 }
 
 piece::Piece Checkerboard::GetFieldPiece(const Position& position)
@@ -187,12 +189,27 @@ bool Checkerboard::ValidateLongMove(const Position& from, const Position& to)
     return true;
 }
 
-void Checkerboard::MovePiece(const Position& from, const Position& to)
+void Checkerboard::MovePiece(const Position& from, const Position& to, MoveType move)
 {
     auto fieldStart = Checkerboard::state[from.y][from.x];
     Checkerboard::state[to.y][to.x] = std::move(fieldStart);
     Checkerboard::state[from.y][from.x].player = player::PlayerType::NONE;
     Checkerboard::state[from.y][from.x].type = piece::PieceType::EMPTY;
+
+    if (move == MoveType::LONG) {
+        Capture(from, to);
+    }
+}
+
+void Checkerboard::Capture(const Position& from, const Position& to)
+{
+
+    auto x = (from.x + to.x) / 2;
+    auto y = (from.y + to.y) / 2;
+    piece::Piece* captured = &Checkerboard::state[y][x];
+    Checkerboard::piecesAlive[captured->player]--;
+    captured->player = player::NONE;
+    captured->type = piece::EMPTY;
 }
 
 bool Checkerboard::IsPiecePromotion(const Position& position)
@@ -217,4 +234,9 @@ bool Checkerboard::IsEndPositionForPlayer(const Position& position, player::Play
 void Checkerboard::PromotePiece(const Position& position)
 {
     Checkerboard::state[position.y][position.x].type = piece::KING;
+}
+
+bool Checkerboard::IsGameCompleted()
+{
+    return (Checkerboard::piecesAlive[player::PLAYER1] == 0 || Checkerboard::piecesAlive[player::PLAYER2] == 0);
 }

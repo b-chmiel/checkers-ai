@@ -1,19 +1,16 @@
 #include "player.h"
 #include <string>
 
-std::string player::GetPlayerName(PlayerType player)
+using namespace player;
+
+std::map<PlayerType, std::string> Player::playerNames = { { player::PLAYER1, "PLAYER1" }, { player::PLAYER2, "PLAYER2" } };
+
+std::string Player::GetPlayerName(PlayerType player)
 {
-    switch (player) {
-    case PlayerType::PLAYER1:
-        return "PLAYER1";
-    case PlayerType::PLAYER2:
-        return "PLAYER2";
-    default:
-        return "NONE";
-    }
+    return Player::playerNames[player];
 }
 
-player::PlayerType player::GetAnotherPlayer(PlayerType other)
+player::PlayerType Player::GetAnotherPlayer(PlayerType other)
 {
     switch (other) {
     case PlayerType::PLAYER1:

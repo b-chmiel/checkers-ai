@@ -1,6 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <map>
 #include <string>
 
 namespace player {
@@ -10,8 +11,14 @@ enum PlayerType {
     PLAYER2
 };
 
-std::string GetPlayerName(PlayerType type);
-PlayerType GetAnotherPlayer(PlayerType type);
+class Player {
+public:
+    static std::string GetPlayerName(PlayerType type);
+    static PlayerType GetAnotherPlayer(PlayerType type);
+
+private:
+    static std::map<player::PlayerType, std::string> playerNames;
+};
 }
 
 #endif

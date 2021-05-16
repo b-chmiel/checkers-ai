@@ -5,6 +5,7 @@
 #include "piece.h"
 #include "player.h"
 #include "position.h"
+#include <map>
 #include <vector>
 
 namespace board {
@@ -23,19 +24,21 @@ public:
     bool IsGameCompleted();
 
 private:
+    std::map<player::PlayerType, int> piecesAlive;
     std::string GetFieldIcon(int i, int j);
     void PrintLettersBelow();
     piece::Piece GetFieldPiece(const Position& position);
     std::string GetFieldNumber(int i);
     std::string GetFieldString(int i, int j);
-    void MovePiece(const Position& from, const Position& to);
-    bool IsLegalMove(const Position& from, const Position& to);
+    void MovePiece(const Position& from, const Position& to, MoveType move);
+    MoveType ValidatedMoveType(const Position& from, const Position& to);
     MoveType GetMoveType(const Position& from, const Position& to);
     bool ValidateShortMove(const Position& from, const Position& to);
     bool ValidateLongMove(const Position& from, const Position& to);
     bool IsPiecePromotion(const Position& position);
     bool IsEndPositionForPlayer(const Position& position, player::PlayerType player);
     void PromotePiece(const Position& position);
+    void Capture(const Position& from, const Position& to);
 };
 }
 #endif

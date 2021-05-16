@@ -30,8 +30,8 @@ int main()
     board.Show();
 
     std::string input;
-    while (true) {
-        printf("\n%s>>> ", player::GetPlayerName(board.currentPlayer).c_str());
+    while (!board.IsGameCompleted()) {
+        printf("\n%s>>> ", player::Player::GetPlayerName(board.currentPlayer).c_str());
         getline(std::cin, input);
         if (input == "exit") {
             return 0;
@@ -45,6 +45,9 @@ int main()
 
         board.Show();
     }
+
+    auto playerLost = player::Player::GetAnotherPlayer(board.currentPlayer);
+    printf("\nWon player: %s", player::Player::GetPlayerName(playerLost).c_str());
 
     return 0;
 }
