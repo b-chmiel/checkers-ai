@@ -9,8 +9,8 @@ class Position {
 public:
     char letter;
     int number;
-    int indexI;
-    int indexJ;
+    int y;
+    int x;
 
     Position(char letter, int number);
     static std::experimental::optional<Position> Construct(const std::string position);

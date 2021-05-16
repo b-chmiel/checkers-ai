@@ -1,5 +1,4 @@
 {
-    "makefile.extensionOutputFolder": "./.vscode",
     "files.associations": {
         "*.h": "cpp",
         "array": "cpp",
@@ -63,5 +62,5 @@
         "thread": "cpp",
         "propagate_const": "cpp"
     },
-    "clang-format.executable": "/usr/bin/clang-format"
+    "clang-format.executable": "/usr/bin/clang-format",
 }

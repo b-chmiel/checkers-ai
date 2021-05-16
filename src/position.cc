@@ -8,8 +8,8 @@ Position::Position(char letter, int number)
     : letter(letter)
     , number(number)
 {
-    Position::indexI = constants::BOARD_HEIGHT - number;
-    Position::indexJ = letter - 'A';
+    Position::y = constants::BOARD_HEIGHT - number;
+    Position::x = letter - 'A';
 }
 
 std::experimental::optional<Position> Position::Construct(const std::string position)
@@ -42,5 +42,5 @@ bool Position::Validate(char letter, int number)
 
 bool Position::operator==(const Position& other)
 {
-    return other.indexI == Position::indexI && other.indexJ == Position::indexJ;
+    return other.y == Position::y && other.x == Position::x;
 }

@@ -27,7 +27,6 @@ $(LIB_NAME):
 	rm -f *.o
 
 debug: 
-	scan-build  make
 	mkdir -p $(OUT_DIR)
 	$(CXX) $(DEBUG_FLAGS) $(SRCS) -I. -o $(OUT_DIR)/$(LIB_NAME)
 	rm -f *.o
@@ -37,6 +36,9 @@ run: $(LIB_NAME)
 
 runDebug: debug
 	./build/main
+
+analyze:
+	$(CXX) --analyze -Xanalyzer -analyzer-output=text $(SRCS)
 
 unit_test_src: 
 	$(CXX) -c $(TST_LIBS) 
@@ -67,5 +69,5 @@ clean:
 	-rm -rf $(OUT_DIR) $(COV_DIR) 
 
 gdb: debug
-	gdb ./$(OUT_DIR)/$(LIB_NAME)
+	gdb ./$(OUT_DIR)/$(LIB_NAME) -tui
 

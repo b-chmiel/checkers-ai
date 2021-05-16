@@ -1,31 +1,28 @@
 #include "board.h"
 #include "constants.h"
+#include <cmath>
 #include <iostream>
 #include <string>
 
 using namespace board;
 
-Piece::Piece(const Player player, const PieceType type)
-{
-    Piece::player = player;
-    Piece::type = type;
-}
-
 Checkerboard::Checkerboard()
 {
-    auto currentPlayer = Player::PLAYER2;
+    const int middleRow = constants::BOARD_HEIGHT / 2;
+
+    auto currentPlayer = player::PlayerType::PLAYER2;
     for (auto i = 0; i < constants::BOARD_HEIGHT; i++) {
-        if (i > 3) {
-            currentPlayer = Player::PLAYER1;
+        if (i > middleRow) {
+            currentPlayer = player::PlayerType::PLAYER1;
         }
 
         for (auto j = 0; j < constants::BOARD_WIDTH; j++) {
-            if (i == 3 || i == 4) {
-                Checkerboard::state[i][j] = Piece(Player::NONE, PieceType::EMPTY);
+            if (i == middleRow || i == middleRow - 1) {
+                Checkerboard::state[i][j] = piece::Piece(player::PlayerType::NONE, piece::PieceType::EMPTY);
             } else if (i % 2 == j % 2) {
-                Checkerboard::state[i][j] = Piece(Player::NONE, PieceType::EMPTY);
+                Checkerboard::state[i][j] = piece::Piece(player::PlayerType::NONE, piece::PieceType::EMPTY);
             } else {
-                Checkerboard::state[i][j] = Piece(currentPlayer, PieceType::MAN);
+                Checkerboard::state[i][j] = piece::Piece(currentPlayer, piece::PieceType::MAN);
             }
         }
     }
@@ -33,66 +30,58 @@ Checkerboard::Checkerboard()
 
 void Checkerboard::Show()
 {
-    const char* colorA = "\e[0;44;43m";
-    const char* colorB = "\e[0;30;44m";
-    const char* cancelEffects = "\e[0m";
+    const std::string cancelEffects = "\e[0m";
     const int height = constants::BOARD_HEIGHT;
     const int width = constants::BOARD_WIDTH;
 
     for (auto i = 0; i < height; i++) {
-        printf("%d ", height - i);
-        if (i != 0) {
-            printf(" ");
-        }
+        printf("%s", GetFieldNumber(i).c_str());
+
         for (auto j = 0; j < width; j++) {
-            const char* field = GetFieldIcon(i, j);
-
-            if (i % 2 == j % 2) {
-                printf("%s", colorA);
-            } else {
-                printf("%s", colorB);
-            }
-
-            printf("%s", field);
+            printf("%s", GetFieldString(i, j).c_str());
         }
-        printf("%s\n", cancelEffects);
+
+        printf("%s\n", cancelEffects.c_str());
     }
 
     PrintLettersBelow();
-    printf("%s", cancelEffects);
+    printf("%s", cancelEffects.c_str());
 }
 
-enum FieldType {
-    NONE,
-    PLAYER1,
-    PLAYER2,
-    PLAYER1_KING,
-    PLAYER2_KING
-};
-
-const char* Checkerboard::GetFieldIcon(int i, int j)
+std::string Checkerboard::GetFieldNumber(int i)
 {
-    const char* icons[5] = { "   ", " ⛀ ", " ⛂ ", " ⛁ ", " ⛃ " };
-    auto fieldState = Checkerboard::state[i][j];
-    FieldType type;
+    const int height = constants::BOARD_HEIGHT;
+    std::string result = std::to_string(height - i);
+    result += " ";
 
-    if (fieldState.player == Player::NONE) {
-        type = FieldType::NONE;
-    } else if (fieldState.player == Player::PLAYER1) {
-        if (fieldState.type == PieceType::MAN) {
-            type = FieldType::PLAYER1;
-        } else {
-            type = FieldType::PLAYER1_KING;
-        }
-    } else {
-        if (fieldState.type == PieceType::MAN) {
-            type = FieldType::PLAYER2;
-        } else {
-            type = FieldType::PLAYER2_KING;
-        }
+    if (std::to_string(height - i).length() == 1) {
+        result += " ";
     }
 
-    return icons[type];
+    return result;
+}
+
+std::string Checkerboard::GetFieldString(int i, int j)
+{
+    const std::string colorA = "\e[0;44;43m";
+    const std::string colorB = "\e[0;30;44m";
+
+    std::string field = GetFieldIcon(i, j);
+    std::string color;
+
+    if (i % 2 == j % 2) {
+        color = colorA;
+    } else {
+        color = colorB;
+    }
+
+    return color + field;
+}
+
+std::string Checkerboard::GetFieldIcon(int i, int j)
+{
+    auto piece = Checkerboard::state[i][j];
+    return piece.GetIcon();
 }
 
 void Checkerboard::PrintLettersBelow()
@@ -122,45 +111,110 @@ bool Checkerboard::Move(const std::vector<Position> path)
         last = current;
     }
 
+    if (IsPiecePromotion(last)) {
+        PromotePiece(last);
+    }
+
+    Checkerboard::currentPlayer = player::GetAnotherPlayer(Checkerboard::currentPlayer);
+
     return true;
 }
 
-enum MoveType {
-    ILLEGAL,
-    SHORT,
-    LONG
-};
-
-bool Checkerboard::IsLegalMove(const Position from, const Position to)
+bool Checkerboard::IsLegalMove(const Position& from, const Position& to)
 {
-    auto destinationState = GetFieldState(to);
-    if (abs(from.indexI - to.indexI) == 1 && abs(from.indexJ - to.indexJ) == 1) {
-        return destinationState.player == Player::NONE;
-    } else if (abs(from.indexI - to.indexI) == 2 && abs(from.indexJ - to.indexJ) == 2) {
-        auto i = to.indexI + (from.indexI - to.indexI);
-        auto j = to.indexJ + (from.indexJ - to.indexJ);
-        auto interState = Checkerboard::state[i][j];
+    auto startField = GetFieldPiece(from);
+    auto endField = GetFieldPiece(to);
 
-        return interState.player != Player::NONE;
+    if (startField.player != Checkerboard::currentPlayer || endField.player != player::NONE) {
+        return false;
+    }
+
+    MoveType type = GetMoveType(from, to);
+
+    if (type == MoveType::SHORT) {
+        return ValidateShortMove(from, to);
+    } else if (type == MoveType::LONG) {
+        return ValidateLongMove(from, to);
     }
 
     return false;
 }
 
-MoveType GetMoveType(const Position from, const Position to)
+piece::Piece Checkerboard::GetFieldPiece(const Position& position)
 {
+    return Checkerboard::state[position.y][position.x];
+}
+
+MoveType Checkerboard::GetMoveType(const Position& from, const Position& to)
+{
+    const int differenceHorizontal = std::abs(from.x - to.x);
+    const int differenceVertical = std::abs(from.y - to.y);
+    const int shortLenght = 1;
+    const int longLenght = 2;
+
+    if (differenceHorizontal != differenceVertical) {
+        return MoveType::ILLEGAL;
+    } else if (differenceHorizontal == shortLenght) {
+        return MoveType::SHORT;
+    } else if (differenceHorizontal == longLenght) {
+        return MoveType::LONG;
+    }
+
     return MoveType::ILLEGAL;
 }
 
-Piece Checkerboard::GetFieldState(const Position position)
+bool Checkerboard::ValidateShortMove(const Position& from, const Position& to)
 {
-    return Checkerboard::state[position.indexI][position.indexJ];
+    const int differenceVertical = from.y - to.y;
+
+    if (differenceVertical > 0) {
+        return Checkerboard::currentPlayer == player::PLAYER1;
+    } else {
+        return Checkerboard::currentPlayer == player::PLAYER2;
+    }
 }
 
-void Checkerboard::MovePiece(const Position from, const Position to)
+bool Checkerboard::ValidateLongMove(const Position& from, const Position& to)
 {
-    auto fieldStart = Checkerboard::state[from.indexI][from.indexJ];
-    Checkerboard::state[to.indexI][to.indexJ] = fieldStart;
-    Checkerboard::state[from.indexI][from.indexJ].player = Player::NONE;
-    Checkerboard::state[from.indexI][from.indexJ].type = PieceType::EMPTY;
+    auto x = (to.x + from.x) / 2;
+    auto y = (to.y + from.y) / 2;
+    auto interPiece = Checkerboard::state[y][x];
+
+    if (interPiece.player == Checkerboard::currentPlayer || interPiece.player == player::PlayerType::NONE) {
+        return false;
+    }
+
+    return true;
+}
+
+void Checkerboard::MovePiece(const Position& from, const Position& to)
+{
+    auto fieldStart = Checkerboard::state[from.y][from.x];
+    Checkerboard::state[to.y][to.x] = std::move(fieldStart);
+    Checkerboard::state[from.y][from.x].player = player::PlayerType::NONE;
+    Checkerboard::state[from.y][from.x].type = piece::PieceType::EMPTY;
+}
+
+bool Checkerboard::IsPiecePromotion(const Position& position)
+{
+    auto piece = GetFieldPiece(position);
+
+    if (piece.type == piece::KING)
+        return false;
+
+    return IsEndPositionForPlayer(position, piece.player);
+}
+
+bool Checkerboard::IsEndPositionForPlayer(const Position& position, player::PlayerType player)
+{
+    if (player == player::PLAYER2) {
+        return position.y == constants::BOARD_HEIGHT - 1;
+    }
+
+    return position.y == 0;
+}
+
+void Checkerboard::PromotePiece(const Position& position)
+{
+    Checkerboard::state[position.y][position.x].type = piece::KING;
 }

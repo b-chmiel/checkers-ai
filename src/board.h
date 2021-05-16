@@ -2,47 +2,40 @@
 #define BOARD_H
 
 #include "constants.h"
+#include "piece.h"
+#include "player.h"
 #include "position.h"
 #include <vector>
+
 namespace board {
-
-enum Player {
-    NONE,
-    PLAYER1,
-    PLAYER2
+enum MoveType {
+    ILLEGAL,
+    SHORT,
+    LONG
 };
-
-enum PieceType {
-    EMPTY,
-    MAN,
-    KING
-};
-class Piece {
-
-public:
-    Player player;
-    PieceType type;
-
-    Piece() = default;
-    Piece(const Player player, const PieceType type);
-};
-
 class Checkerboard {
 public:
-    Piece state[constants::BOARD_HEIGHT][constants::BOARD_WIDTH];
+    player::PlayerType currentPlayer = player::PlayerType::PLAYER1;
+    piece::Piece state[constants::BOARD_HEIGHT][constants::BOARD_WIDTH];
     Checkerboard();
     void Show();
     bool Move(const std::vector<Position> path);
     bool IsGameCompleted();
 
 private:
-    Player currentPlayer = Player::PLAYER1;
-    const char* GetFieldIcon(int i, int j);
+    std::string GetFieldIcon(int i, int j);
     void PrintLettersBelow();
-    Piece GetFieldState(const Position position);
-    void MovePiece(const Position from, const Position to);
-    bool IsLegalMove(const Position from, const Position to);
+    piece::Piece GetFieldPiece(const Position& position);
+    std::string GetFieldNumber(int i);
+    std::string GetFieldString(int i, int j);
+    void MovePiece(const Position& from, const Position& to);
+    bool IsLegalMove(const Position& from, const Position& to);
+    MoveType GetMoveType(const Position& from, const Position& to);
+    bool ValidateShortMove(const Position& from, const Position& to);
+    bool ValidateLongMove(const Position& from, const Position& to);
+    bool IsPiecePromotion(const Position& position);
+    bool IsEndPositionForPlayer(const Position& position, player::PlayerType player);
+    void PromotePiece(const Position& position);
 };
 }
-
 #endif

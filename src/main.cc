@@ -1,4 +1,5 @@
 #include "board.h"
+#include "player.h"
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -30,7 +31,7 @@ int main()
 
     std::string input;
     while (true) {
-        printf("\n>>> ");
+        printf("\n%s>>> ", player::GetPlayerName(board.currentPlayer).c_str());
         getline(std::cin, input);
         if (input == "exit") {
             return 0;
