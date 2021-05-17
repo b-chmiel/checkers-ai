@@ -30,7 +30,7 @@ private:
     piece::Piece GetFieldPiece(const Position& position);
     std::string GetFieldNumber(int i);
     std::string GetFieldString(int i, int j);
-    void MovePiece(const Position& from, const Position& to, MoveType move);
+    void ChangePositionOfPiece(const Position& from, const Position& to, MoveType move);
     MoveType ValidatedMoveType(const Position& from, const Position& to);
     MoveType GetMoveType(const Position& from, const Position& to);
     bool ValidateShortMove(const Position& from, const Position& to);
@@ -39,6 +39,7 @@ private:
     bool IsEndPositionForPlayer(const Position& position, player::PlayerType player);
     void PromotePiece(const Position& position);
     void Capture(const Position& from, const Position& to);
+    bool IsAnyMovePossible();
 };
 }
 #endif

@@ -13,6 +13,7 @@ public:
     int x;
 
     Position(char letter, int number);
+    Position(int x, int y);
     static std::experimental::optional<Position> Construct(const std::string position);
     bool operator==(const Position& other);
 

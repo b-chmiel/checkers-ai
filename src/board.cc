@@ -1,5 +1,6 @@
 #include "board.h"
 #include "constants.h"
+#include <algorithm>
 #include <cmath>
 #include <iostream>
 #include <string>
@@ -107,7 +108,7 @@ bool Checkerboard::Move(const std::vector<Position> path)
         if (move == MoveType::ILLEGAL) {
             return false;
         } else {
-            MovePiece(last, current, move);
+            ChangePositionOfPiece(last, current, move);
         }
 
         last = current;
@@ -134,6 +135,10 @@ MoveType Checkerboard::ValidatedMoveType(const Position& from, const Position& t
     MoveType type = GetMoveType(from, to);
 
     if (type == MoveType::SHORT) {
+        if (startField.type == piece::KING) {
+            return MoveType::SHORT;
+        }
+
         return ValidateShortMove(from, to) ? MoveType::SHORT : MoveType::ILLEGAL;
     } else if (type == MoveType::LONG) {
         return ValidateLongMove(from, to) ? MoveType::LONG : MoveType::ILLEGAL;
@@ -189,7 +194,7 @@ bool Checkerboard::ValidateLongMove(const Position& from, const Position& to)
     return true;
 }
 
-void Checkerboard::MovePiece(const Position& from, const Position& to, MoveType move)
+void Checkerboard::ChangePositionOfPiece(const Position& from, const Position& to, MoveType move)
 {
     auto fieldStart = Checkerboard::state[from.y][from.x];
     Checkerboard::state[to.y][to.x] = std::move(fieldStart);
@@ -203,7 +208,6 @@ void Checkerboard::MovePiece(const Position& from, const Position& to, MoveType 
 
 void Checkerboard::Capture(const Position& from, const Position& to)
 {
-
     auto x = (from.x + to.x) / 2;
     auto y = (from.y + to.y) / 2;
     piece::Piece* captured = &Checkerboard::state[y][x];
@@ -238,5 +242,41 @@ void Checkerboard::PromotePiece(const Position& position)
 
 bool Checkerboard::IsGameCompleted()
 {
-    return (Checkerboard::piecesAlive[player::PLAYER1] == 0 || Checkerboard::piecesAlive[player::PLAYER2] == 0);
+    return (Checkerboard::piecesAlive[player::PLAYER1] == 0 || Checkerboard::piecesAlive[player::PLAYER2] == 0) || !IsAnyMovePossible();
+}
+
+bool Checkerboard::IsAnyMovePossible()
+{
+    //for each column
+    for (auto y = 0; y < constants::BOARD_HEIGHT; y++) {
+        //for each row
+        for (auto x = 0; x < constants::BOARD_WIDTH; x++) {
+
+            if (Checkerboard::state[y][x].player == Checkerboard::currentPlayer) {
+                auto from = Position(x, y);
+                auto to = from;
+
+                //for short and long moves
+                for (auto moveLength = 1; moveLength <= 2; moveLength++) {
+                    //for each direction for X
+                    for (auto directionX = -1 * moveLength; directionX <= 1 * moveLength; directionX += 2 * moveLength) {
+                        //for each direction for Y
+                        for (auto directionY = -1; directionY <= 1; directionY += 2 * moveLength) {
+                            to.x = from.x + directionX;
+                            to.y = from.y + directionY;
+                            if (to.x < 0 || to.y < 0) {
+                                continue;
+                            }
+
+                            if (ValidatedMoveType(from, to) != MoveType::ILLEGAL) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return false;
 }

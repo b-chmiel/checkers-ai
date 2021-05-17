@@ -12,6 +12,14 @@ Position::Position(char letter, int number)
     Position::x = letter - 'A';
 }
 
+Position::Position(int x, int y)
+    : y(y)
+    , x(x)
+{
+    Position::letter = 'A' + x;
+    Position::number = constants::BOARD_HEIGHT - y;
+}
+
 std::experimental::optional<Position> Position::Construct(const std::string position)
 {
     if (position.length() != 2) {
