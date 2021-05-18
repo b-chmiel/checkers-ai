@@ -14,7 +14,7 @@ int main()
     do
     {
         board.Show();
-        availableMoves = AvailableMoves::GetAvailableMoves(board, board.m_CurrentPlayer);
+        availableMoves = AvailableMoves::GetAvailableMoves(board, board.CurrentPlayer);
 
         auto move = UserInput::GetUserInput(board, availableMoves);
         if (!move)
@@ -27,7 +27,7 @@ int main()
     } while (!board.IsGameCompleted() && availableMoves.size() != 0);
 
     board.Show();
-    auto playerLost = player::Player::GetAnotherPlayer(board.m_CurrentPlayer);
+    auto playerLost = player::Player::GetAnotherPlayer(board.CurrentPlayer);
     printf("\nWon player: %s", player::Player::GetPlayerName(playerLost).c_str());
 
     return 0;

@@ -21,8 +21,8 @@ enum class MoveType
 class Checkerboard
 {
 public:
-    player::PlayerType m_CurrentPlayer = player::PlayerType::PLAYER1;
-    piece::Piece m_State[constants::BOARD_HEIGHT][constants::BOARD_WIDTH];
+    player::PlayerType CurrentPlayer = player::PlayerType::PLAYER1;
+    piece::Piece State[constants::BOARD_HEIGHT][constants::BOARD_WIDTH];
 
     Checkerboard();
     void Show() const;
@@ -32,7 +32,7 @@ public:
     void Move(const std::vector<Point>& path);
 
 private:
-    std::map<player::PlayerType, int> piecesAlive;
+    std::map<player::PlayerType, int> m_PiecesAlive;
 
     void PrintLettersBelow() const;
     piece::Piece GetFieldPiece(const Point& position) const;

@@ -25,15 +25,15 @@ class Piece
 {
 
 public:
-    player::PlayerType m_Player;
-    PieceType m_Type;
+    player::PlayerType Player;
+    PieceType Type;
 
     Piece();
     Piece(const player::PlayerType& player, const PieceType& type);
     std::string GetIcon();
 
 private:
-    static const std::string icons[5];
+    static const std::string m_Icons[5];
 };
 }
 

@@ -2,5 +2,5 @@
 
 bool Point::operator==(const Point& other) const
 {
-    return other.m_Y == Point::m_Y && other.m_X == Point::m_X;
+    return other.Y == Point::Y && other.X == Point::X;
 }

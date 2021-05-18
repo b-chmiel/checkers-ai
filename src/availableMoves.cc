@@ -20,7 +20,7 @@ std::vector<std::vector<Point>> AvailableMoves::GetAvailableMoves(const board::C
         //search only in squares that contains piece
         for (auto x = 1 - y % 2; x < constants::BOARD_WIDTH; x += 2)
         {
-            if (board.m_State[y][x].m_Player == player)
+            if (board.State[y][x].Player == player)
             {
                 auto from = Point { x, y };
 
@@ -45,8 +45,8 @@ std::vector<std::vector<Point>> AvailableMoves::AddLongMoves(const Point& from, 
     {
         for (auto directionX = -2; directionX <= 2; directionX += 4)
         {
-            to.m_X = from.m_X + directionX;
-            to.m_Y = from.m_Y + directionY;
+            to.X = from.X + directionX;
+            to.Y = from.Y + directionY;
 
             if (!IsPointWithinBounds(to) || IsCycle(last, to))
             {
@@ -81,8 +81,8 @@ std::vector<std::vector<Point>> AvailableMoves::AddShortMoves(const Point& from,
     {
         for (auto directionX = -1; directionX <= 1; directionX += 2)
         {
-            to.m_X = from.m_X + directionX;
-            to.m_Y = from.m_Y + directionY;
+            to.X = from.X + directionX;
+            to.Y = from.Y + directionY;
 
             if (!IsPointWithinBounds(to))
             {
@@ -101,5 +101,5 @@ std::vector<std::vector<Point>> AvailableMoves::AddShortMoves(const Point& from,
 
 bool AvailableMoves::IsPointWithinBounds(const Point& point)
 {
-    return point.m_X >= 0 && point.m_Y >= 0 && point.m_X < constants::BOARD_WIDTH && point.m_Y < constants::BOARD_HEIGHT;
+    return point.X >= 0 && point.Y >= 0 && point.X < constants::BOARD_WIDTH && point.Y < constants::BOARD_HEIGHT;
 }

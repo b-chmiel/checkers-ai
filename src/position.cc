@@ -9,13 +9,13 @@ Position::Position(char letter, int number)
     : m_Letter(letter)
     , m_Number(number)
 {
-    Position::m_Y = constants::BOARD_HEIGHT - number;
-    Position::m_X = letter - 'A';
+    Position::Y = constants::BOARD_HEIGHT - number;
+    Position::X = letter - 'A';
 }
 
 Position::Position(int x, int y)
-    : m_Y(y)
-    , m_X(x)
+    : X(x)
+    , Y(y)
 {
     Position::m_Letter = 'A' + x;
     Position::m_Number = constants::BOARD_HEIGHT - y;
@@ -45,7 +45,7 @@ bool Position::Validate(char letter, int number)
     {
         return false;
     }
-    if (number > Position::maxNumber || number < 1)
+    if (number > Position::m_MaxNumber || number < 1)
     {
         return false;
     }
@@ -55,5 +55,5 @@ bool Position::Validate(char letter, int number)
 
 bool Position::operator==(const Position& other)
 {
-    return other.m_Y == Position::m_Y && other.m_X == Position::m_X;
+    return other.Y == Position::Y && other.X == Position::X;
 }

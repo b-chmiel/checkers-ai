@@ -8,10 +8,8 @@
 class Position
 {
 public:
-    char m_Letter;
-    int m_Number;
-    int m_Y;
-    int m_X;
+    int X;
+    int Y;
 
     Position(char letter, int number);
     Position(int x, int y);
@@ -19,8 +17,11 @@ public:
     bool operator==(const Position& other);
 
 private:
+    char m_Letter;
+    int m_Number;
+
     static const std::set<char> m_AvailableLetters;
-    static const int maxNumber = constants::BOARD_HEIGHT;
+    static const int m_MaxNumber = constants::BOARD_HEIGHT;
 
     static bool Validate(char letter, int number);
 };

@@ -14,7 +14,7 @@ std::optional<std::vector<Point>> UserInput::GetUserInput(const board::Checkerbo
     {
         std::string input;
 
-        printf("\n%s>>> ", player::Player::GetPlayerName(board.m_CurrentPlayer).c_str());
+        printf("\n%s>>> ", player::Player::GetPlayerName(board.CurrentPlayer).c_str());
 
         getline(std::cin, input);
         if (input == "exit")
@@ -51,7 +51,7 @@ std::vector<Point> UserInput::ParsePath(std::string input)
             break;
         }
 
-        Point point = { position->m_X, position->m_Y };
+        Point point = { position->X, position->Y };
         result.push_back(point);
     }
 

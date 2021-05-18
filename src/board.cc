@@ -23,12 +23,12 @@ Checkerboard::Checkerboard()
         {
             if (IsInitiallyEmpty(Point { x, y }, middleRow))
             {
-                Checkerboard::m_State[y][x] = piece::Piece();
+                Checkerboard::State[y][x] = piece::Piece();
             }
             else
             {
-                Checkerboard::m_State[y][x] = piece::Piece(currentPlayer, piece::PieceType::MAN);
-                Checkerboard::piecesAlive[currentPlayer]++;
+                Checkerboard::State[y][x] = piece::Piece(currentPlayer, piece::PieceType::MAN);
+                Checkerboard::m_PiecesAlive[currentPlayer]++;
             }
         }
     }
@@ -36,8 +36,8 @@ Checkerboard::Checkerboard()
 
 bool Checkerboard::IsInitiallyEmpty(const Point& point, int middleRow)
 {
-    auto isMiddleRow = point.m_Y == middleRow || point.m_Y == middleRow - 1;
-    auto isOnDiagonals = point.m_Y % 2 == point.m_X % 2;
+    auto isMiddleRow = point.Y == middleRow || point.Y == middleRow - 1;
+    auto isOnDiagonals = point.Y % 2 == point.X % 2;
 
     return isMiddleRow || isOnDiagonals;
 }
@@ -108,7 +108,7 @@ std::string Checkerboard::GetFieldString(int y, int x) const
 
 std::string Checkerboard::GetFieldIcon(int y, int x) const
 {
-    auto piece = Checkerboard::m_State[y][x];
+    auto piece = Checkerboard::State[y][x];
     return piece.GetIcon();
 }
 
@@ -124,10 +124,10 @@ void Checkerboard::PrintLettersBelow() const
 
 bool Checkerboard::IsMoveValid(const Point& from, const Point& to, player::PlayerType) const
 {
-    auto startField = Checkerboard::m_State[from.m_Y][from.m_X];
-    auto endField = Checkerboard::m_State[to.m_Y][to.m_X];
+    auto startField = Checkerboard::State[from.Y][from.X];
+    auto endField = Checkerboard::State[to.Y][to.X];
 
-    if (endField.m_Player != player::NONE)
+    if (endField.Player != player::NONE)
     {
         return false;
     }
@@ -136,7 +136,7 @@ bool Checkerboard::IsMoveValid(const Point& from, const Point& to, player::Playe
 
     if (type == MoveType::SHORT)
     {
-        if (startField.m_Type == piece::KING)
+        if (startField.Type == piece::KING)
         {
             return true;
         }
@@ -153,7 +153,7 @@ bool Checkerboard::IsMoveValid(const Point& from, const Point& to, player::Playe
 
 MoveType Checkerboard::GetMoveType(const Point& from, const Point& to) const
 {
-    const int differenceHorizontal = std::abs(from.m_X - to.m_X);
+    const int differenceHorizontal = std::abs(from.X - to.X);
     const int shortLength = 1;
     const int longLength = 2;
 
@@ -171,25 +171,25 @@ MoveType Checkerboard::GetMoveType(const Point& from, const Point& to) const
 
 bool Checkerboard::ValidateShortMove(const Point& from, const Point& to) const
 {
-    const int differenceVertical = from.m_Y - to.m_Y;
+    const int differenceVertical = from.Y - to.Y;
 
     if (differenceVertical > 0)
     {
-        return Checkerboard::m_CurrentPlayer == player::PLAYER1;
+        return Checkerboard::CurrentPlayer == player::PLAYER1;
     }
     else
     {
-        return Checkerboard::m_CurrentPlayer == player::PLAYER2;
+        return Checkerboard::CurrentPlayer == player::PLAYER2;
     }
 }
 
 bool Checkerboard::ValidateLongMove(const Point& from, const Point& to) const
 {
-    auto x = (to.m_X + from.m_X) / 2;
-    auto y = (to.m_Y + from.m_Y) / 2;
-    auto interPiece = Checkerboard::m_State[y][x];
+    auto x = (to.X + from.X) / 2;
+    auto y = (to.Y + from.Y) / 2;
+    auto interPiece = Checkerboard::State[y][x];
 
-    if (interPiece.m_Player == Checkerboard::m_CurrentPlayer || interPiece.m_Player == player::PlayerType::NONE)
+    if (interPiece.Player == Checkerboard::CurrentPlayer || interPiece.Player == player::PlayerType::NONE)
     {
         return false;
     }
@@ -224,15 +224,15 @@ void Checkerboard::Move(const std::vector<Point>& path)
         PromotePiece(last);
     }
 
-    Checkerboard::m_CurrentPlayer = player::Player::GetAnotherPlayer(Checkerboard::m_CurrentPlayer);
+    Checkerboard::CurrentPlayer = player::Player::GetAnotherPlayer(Checkerboard::CurrentPlayer);
 }
 
 void Checkerboard::ChangePositionOfPiece(const Point& from, const Point& to, MoveType move)
 {
-    auto fieldStart = Checkerboard::m_State[from.m_Y][from.m_X];
-    Checkerboard::m_State[to.m_Y][to.m_X] = std::move(fieldStart);
-    Checkerboard::m_State[from.m_Y][from.m_X].m_Player = player::PlayerType::NONE;
-    Checkerboard::m_State[from.m_Y][from.m_X].m_Type = piece::PieceType::EMPTY;
+    auto fieldStart = Checkerboard::State[from.Y][from.X];
+    Checkerboard::State[to.Y][to.X] = std::move(fieldStart);
+    Checkerboard::State[from.Y][from.X].Player = player::PlayerType::NONE;
+    Checkerboard::State[from.Y][from.X].Type = piece::PieceType::EMPTY;
 
     if (move == MoveType::LONG)
     {
@@ -242,49 +242,49 @@ void Checkerboard::ChangePositionOfPiece(const Point& from, const Point& to, Mov
 
 void Checkerboard::Capture(const Point& from, const Point& to)
 {
-    auto x = (from.m_X + to.m_X) / 2;
-    auto y = (from.m_Y + to.m_Y) / 2;
+    auto x = (from.X + to.X) / 2;
+    auto y = (from.Y + to.Y) / 2;
 
-    piece::Piece* captured = &Checkerboard::m_State[y][x];
+    piece::Piece* captured = &Checkerboard::State[y][x];
 
-    Checkerboard::piecesAlive[captured->m_Player]--;
-    captured->m_Player = player::NONE;
-    captured->m_Type = piece::EMPTY;
+    Checkerboard::m_PiecesAlive[captured->Player]--;
+    captured->Player = player::NONE;
+    captured->Type = piece::EMPTY;
 }
 
 bool Checkerboard::IsPiecePromotion(const Point& position) const
 {
     auto piece = GetFieldPiece(position);
 
-    if (piece.m_Type == piece::KING)
+    if (piece.Type == piece::KING)
     {
         return false;
     }
 
-    return IsEndPositionForPlayer(position, piece.m_Player);
+    return IsEndPositionForPlayer(position, piece.Player);
 }
 
 bool Checkerboard::IsEndPositionForPlayer(const Point& position, player::PlayerType player) const
 {
     if (player == player::PLAYER2)
     {
-        return position.m_Y == constants::BOARD_HEIGHT - 1;
+        return position.Y == constants::BOARD_HEIGHT - 1;
     }
 
-    return position.m_Y == 0;
+    return position.Y == 0;
 }
 
 void Checkerboard::PromotePiece(const Point& position)
 {
-    Checkerboard::m_State[position.m_Y][position.m_X].m_Type = piece::KING;
+    Checkerboard::State[position.Y][position.X].Type = piece::KING;
 }
 
 bool Checkerboard::IsGameCompleted()
 {
-    return (Checkerboard::piecesAlive[player::PLAYER1] == 0 || Checkerboard::piecesAlive[player::PLAYER2] == 0);
+    return (Checkerboard::m_PiecesAlive[player::PLAYER1] == 0 || Checkerboard::m_PiecesAlive[player::PLAYER2] == 0);
 }
 
 piece::Piece Checkerboard::GetFieldPiece(const Point& position) const
 {
-    return Checkerboard::m_State[position.m_Y][position.m_X];
+    return Checkerboard::State[position.Y][position.X];
 }
