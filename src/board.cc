@@ -50,6 +50,8 @@ void Checkerboard::Show() const
     const int height = constants::BOARD_HEIGHT;
     const int width = constants::BOARD_WIDTH;
 
+    printf("\n");
+
     for (auto y = 0; y < height; y++)
     {
         printf("%s", GetFieldNumber(y).c_str());
