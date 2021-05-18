@@ -25,8 +25,8 @@ class Piece
 {
 
 public:
-    player::PlayerType player;
-    PieceType type;
+    player::PlayerType m_Player;
+    PieceType m_Type;
 
     Piece();
     Piece(const player::PlayerType& player, const PieceType& type);

@@ -21,7 +21,7 @@ std::vector<Point> ParsePath(std::string input)
             break;
         }
 
-        Point point = { position->x, position->y };
+        Point point = { position->m_X, position->m_Y };
         result.push_back(point);
     }
 
@@ -40,7 +40,7 @@ int main()
     {
         board.Show();
 
-        printf("\n%s>>> ", player::Player::GetPlayerName(board.currentPlayer).c_str());
+        printf("\n%s>>> ", player::Player::GetPlayerName(board.m_CurrentPlayer).c_str());
 
         getline(std::cin, input);
         moveHistory += "\n" + input;
@@ -52,7 +52,7 @@ int main()
 
         auto path = ParsePath(input);
 
-        availableMoves = AvailableMoves::GetAvailableMoves(board, board.currentPlayer);
+        availableMoves = AvailableMoves::GetAvailableMoves(board, board.m_CurrentPlayer);
         bool isMoveCorrect = false;
         for (const auto& move : availableMoves)
         {
@@ -71,7 +71,7 @@ int main()
     } while (!board.IsGameCompleted() && availableMoves.size() != 0);
 
     board.Show();
-    auto playerLost = player::Player::GetAnotherPlayer(board.currentPlayer);
+    auto playerLost = player::Player::GetAnotherPlayer(board.m_CurrentPlayer);
     printf("\nWon player: %s", player::Player::GetPlayerName(playerLost).c_str());
 
     printf("Move history: \n %s", moveHistory.c_str());

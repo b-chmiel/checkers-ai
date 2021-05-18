@@ -4,8 +4,8 @@
 class Point
 {
 public:
-    int x;
-    int y;
+    int m_X;
+    int m_Y;
     bool operator==(const Point& other) const;
 };
 

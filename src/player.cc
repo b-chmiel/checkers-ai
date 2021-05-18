@@ -3,11 +3,11 @@
 
 using namespace player;
 
-std::map<PlayerType, std::string> Player::playerNames = { { player::PLAYER1, "PLAYER1" }, { player::PLAYER2, "PLAYER2" } };
+std::map<PlayerType, std::string> Player::m_PlayerNames = { { player::PLAYER1, "PLAYER1" }, { player::PLAYER2, "PLAYER2" } };
 
 std::string Player::GetPlayerName(PlayerType player)
 {
-    return Player::playerNames[player];
+    return Player::m_PlayerNames[player];
 }
 
 player::PlayerType Player::GetAnotherPlayer(PlayerType other)

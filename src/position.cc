@@ -3,22 +3,22 @@
 #include <optional>
 #include <string>
 
-const std::set<char> Position::availableLetters { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J' };
+const std::set<char> Position::m_AvailableLetters { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J' };
 
 Position::Position(char letter, int number)
-    : letter(letter)
-    , number(number)
+    : m_Letter(letter)
+    , m_Number(number)
 {
-    Position::y = constants::BOARD_HEIGHT - number;
-    Position::x = letter - 'A';
+    Position::m_Y = constants::BOARD_HEIGHT - number;
+    Position::m_X = letter - 'A';
 }
 
 Position::Position(int x, int y)
-    : y(y)
-    , x(x)
+    : m_Y(y)
+    , m_X(x)
 {
-    Position::letter = 'A' + x;
-    Position::number = constants::BOARD_HEIGHT - y;
+    Position::m_Letter = 'A' + x;
+    Position::m_Number = constants::BOARD_HEIGHT - y;
 }
 
 std::optional<Position> Position::Construct(const std::string position)
@@ -41,7 +41,7 @@ std::optional<Position> Position::Construct(const std::string position)
 
 bool Position::Validate(char letter, int number)
 {
-    if (availableLetters.find(letter) == availableLetters.end())
+    if (m_AvailableLetters.find(letter) == m_AvailableLetters.end())
     {
         return false;
     }
@@ -55,5 +55,5 @@ bool Position::Validate(char letter, int number)
 
 bool Position::operator==(const Position& other)
 {
-    return other.y == Position::y && other.x == Position::x;
+    return other.m_Y == Position::m_Y && other.m_X == Position::m_X;
 }

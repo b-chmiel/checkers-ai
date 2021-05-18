@@ -21,8 +21,9 @@ enum class MoveType
 class Checkerboard
 {
 public:
-    player::PlayerType currentPlayer = player::PlayerType::PLAYER1;
-    piece::Piece state[constants::BOARD_HEIGHT][constants::BOARD_WIDTH];
+    player::PlayerType m_CurrentPlayer = player::PlayerType::PLAYER1;
+    piece::Piece m_State[constants::BOARD_HEIGHT][constants::BOARD_WIDTH];
+
     Checkerboard();
     void Show() const;
     bool IsMoveValid(const Point& from, const Point& to, player::PlayerType) const;

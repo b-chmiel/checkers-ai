@@ -7,14 +7,14 @@ using namespace piece;
 const std::string Piece::icons[5] = { "   ", " ⛀ ", " ⛂ ", " ⛁ ", " ⛃ " };
 
 Piece::Piece()
-    : player(player::NONE)
-    , type(PieceType::EMPTY)
+    : m_Player(player::NONE)
+    , m_Type(PieceType::EMPTY)
 {
 }
 
 Piece::Piece(const player::PlayerType& player, const PieceType& type)
-    : player(player)
-    , type(type)
+    : m_Player(player)
+    , m_Type(type)
 {
 }
 
@@ -22,17 +22,17 @@ std::string Piece::GetIcon()
 {
     FieldType type;
 
-    if (Piece::player == player::PlayerType::NONE)
+    if (Piece::m_Player == player::PlayerType::NONE)
     {
         type = FieldType::NONE;
     }
-    else if (Piece::player == player::PlayerType::PLAYER1)
+    else if (Piece::m_Player == player::PlayerType::PLAYER1)
     {
-        type = (Piece::type == PieceType::MAN) ? FieldType::PLAYER1 : FieldType::PLAYER1_KING;
+        type = (Piece::m_Type == PieceType::MAN) ? FieldType::PLAYER1 : FieldType::PLAYER1_KING;
     }
     else
     {
-        type = (Piece::type == PieceType::MAN) ? FieldType::PLAYER2 : FieldType::PLAYER2_KING;
+        type = (Piece::m_Type == PieceType::MAN) ? FieldType::PLAYER2 : FieldType::PLAYER2_KING;
     }
 
     return icons[type];
