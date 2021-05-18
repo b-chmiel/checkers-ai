@@ -1,1 +1,2 @@
 BasedOnStyle: webkit
+BreakBeforeBraces: Allman

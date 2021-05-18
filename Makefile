@@ -63,7 +63,7 @@ callgrind: debug
 	kcachegrind $(OUT_DIR)/callgrind.out.*
 	
 format:
-	clang-format  -i $(shell find . -name '*.cc') $(shell find . -name '*.hpp' ! -name 'catch_amalgamated.hpp') -style=webkit
+	clang-format  -i $(shell find . -name '*.cc') $(shell find . -name '*.hpp' ! -name 'catch_amalgamated.hpp') -style=file
 
 clean:
 	-rm -rf $(OUT_DIR) $(COV_DIR) 

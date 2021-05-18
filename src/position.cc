@@ -1,8 +1,9 @@
 #include "position.h"
 #include "constants.h"
+#include <optional>
 #include <string>
 
-std::set<char> Position::availableLetters { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J' };
+const std::set<char> Position::availableLetters { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J' };
 
 Position::Position(char letter, int number)
     : letter(letter)
@@ -20,28 +21,32 @@ Position::Position(int x, int y)
     Position::number = constants::BOARD_HEIGHT - y;
 }
 
-std::experimental::optional<Position> Position::Construct(const std::string position)
+std::optional<Position> Position::Construct(const std::string position)
 {
-    if (position.length() != 2) {
-        return std::experimental::nullopt;
+    if (position.length() != 2)
+    {
+        return std::nullopt;
     }
 
     char letter = position.at(0);
     int number = position.at(1) - '0';
 
-    if (Position::Validate(letter, number)) {
+    if (Position::Validate(letter, number))
+    {
         return Position(letter, number);
     }
 
-    return std::experimental::nullopt;
+    return std::nullopt;
 }
 
 bool Position::Validate(char letter, int number)
 {
-    if (availableLetters.find(letter) == availableLetters.end()) {
+    if (availableLetters.find(letter) == availableLetters.end())
+    {
         return false;
     }
-    if (number > Position::maxNumber || number < 1) {
+    if (number > Position::maxNumber || number < 1)
+    {
         return false;
     }
 

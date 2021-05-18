@@ -4,13 +4,16 @@
 #include "player.h"
 #include <string>
 
-namespace piece {
-enum PieceType {
+namespace piece
+{
+enum PieceType
+{
     EMPTY,
     MAN,
     KING
 };
-enum FieldType {
+enum FieldType
+{
     NONE,
     PLAYER1,
     PLAYER2,
@@ -18,18 +21,19 @@ enum FieldType {
     PLAYER2_KING
 };
 
-class Piece {
+class Piece
+{
 
 public:
     player::PlayerType player;
     PieceType type;
 
-    Piece() = default;
-    Piece(const player::PlayerType player, const PieceType type);
+    Piece();
+    Piece(const player::PlayerType& player, const PieceType& type);
     std::string GetIcon();
 
 private:
-    static std::string icons[5];
+    static const std::string icons[5];
 };
 }
 

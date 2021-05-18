@@ -24,4 +24,4 @@ E1 D2
 C5 D4
 E3 C5
 C1 E3
-
+exit

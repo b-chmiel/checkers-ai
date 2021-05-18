@@ -12,7 +12,8 @@ std::string Player::GetPlayerName(PlayerType player)
 
 player::PlayerType Player::GetAnotherPlayer(PlayerType other)
 {
-    switch (other) {
+    switch (other)
+    {
     case PlayerType::PLAYER1:
         return PlayerType::PLAYER2;
     case PlayerType::PLAYER2:

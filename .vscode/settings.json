@@ -60,7 +60,8 @@
         "regex": "cpp",
         "shared_mutex": "cpp",
         "thread": "cpp",
-        "propagate_const": "cpp"
+        "propagate_const": "cpp",
+        "cinttypes": "cpp"
     },
     "clang-format.executable": "/usr/bin/clang-format",
 }

@@ -1,3 +1,4 @@
+#include "availableMoves.h"
 #include "board.h"
 #include "player.h"
 #include <iostream>
@@ -5,20 +6,23 @@
 #include <string>
 #include <vector>
 
-auto ParsePath(std::string input)
+std::vector<Point> ParsePath(std::string input)
 {
     std::istringstream stream(input);
     std::string token;
-    std::vector<Position> result;
+    std::vector<Point> result;
 
-    while (getline(stream, token, ' ')) {
+    while (getline(stream, token, ' '))
+    {
         auto position = Position::Construct(token);
-        if (!position) {
+        if (!position)
+        {
             printf("Unrecognised position: %s\n", token.c_str());
             break;
         }
 
-        result.push_back(*position);
+        Point point = { position->x, position->y };
+        result.push_back(point);
     }
 
     return result;
@@ -27,27 +31,49 @@ auto ParsePath(std::string input)
 int main()
 {
     auto board = board::Checkerboard();
-    board.Show();
 
+    std::string moveHistory;
     std::string input;
-    while (!board.IsGameCompleted()) {
+    std::vector<std::vector<Point>> availableMoves;
+
+    do
+    {
+        board.Show();
+
         printf("\n%s>>> ", player::Player::GetPlayerName(board.currentPlayer).c_str());
+
         getline(std::cin, input);
-        if (input == "exit") {
+        moveHistory += "\n" + input;
+        if (input == "exit")
+        {
+            printf("Move history: \n %s", moveHistory.c_str());
             return 0;
         }
 
         auto path = ParsePath(input);
 
-        if (path.size() < 2 || !board.Move(path)) {
-            printf("%s\n", "Cannot make a move");
+        availableMoves = AvailableMoves::GetAvailableMoves(board, board.currentPlayer);
+        bool isMoveCorrect = false;
+        for (const auto& move : availableMoves)
+        {
+            if (move == path)
+            {
+                board.Move(path);
+                isMoveCorrect = true;
+                break;
+            }
         }
 
-        board.Show();
-    }
+        if (!isMoveCorrect)
+        {
+            printf("%s\n", "Cannot make a move");
+        }
+    } while (!board.IsGameCompleted() && availableMoves.size() != 0);
 
+    board.Show();
     auto playerLost = player::Player::GetAnotherPlayer(board.currentPlayer);
     printf("\nWon player: %s", player::Player::GetPlayerName(playerLost).c_str());
 
+    printf("Move history: \n %s", moveHistory.c_str());
     return 0;
 }
