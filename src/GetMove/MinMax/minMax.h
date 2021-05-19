@@ -2,13 +2,14 @@
 #define MIN_MAX_H
 
 #include "../../DrawBoard/board.h"
+#include "../../Utils/move.h"
 #include "../../Utils/point.h"
 #include <vector>
 
 class MinMax
 {
 public:
-    static std::vector<Point> GetMove(const board::Checkerboard& board, const std::vector<std::vector<Point>>& availableMoves);
+    static Move GetMove(const board::Checkerboard& board, const std::vector<Move>& availableMoves);
 };
 
 #endif

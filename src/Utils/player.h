@@ -16,8 +16,15 @@ enum PlayerType
 class Player
 {
 public:
-    static std::string GetPlayerName(PlayerType type);
-    static PlayerType GetAnotherPlayer(PlayerType type);
+    PlayerType Type;
+    Player();
+    Player(PlayerType);
+
+    std::string GetPlayerName() const;
+    PlayerType GetAnotherPlayer() const;
+    int MaxY() const;
+    bool operator==(const Player&) const;
+    bool operator!=(const Player&) const;
 
 private:
     static std::map<player::PlayerType, std::string> m_PlayerNames;

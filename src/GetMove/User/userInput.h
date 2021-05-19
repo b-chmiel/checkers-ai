@@ -2,6 +2,7 @@
 #define USER_INPUT_H
 
 #include "../../DrawBoard/board.h"
+#include "../../Utils/move.h"
 #include "../../Utils/point.h"
 #include <optional>
 #include <string>
@@ -10,9 +11,9 @@
 class UserInput
 {
 public:
-    static std::optional<std::vector<Point>> GetMove(const board::Checkerboard& board, const std::vector<std::vector<Point>>& availableMoves);
+    static std::optional<Move> GetMove(const board::Checkerboard& board, const std::vector<Move>& availableMoves);
 
 private:
-    static std::vector<Point> ParsePath(std::string input);
+    static Move ParseMove(const std::string& input);
 };
 #endif

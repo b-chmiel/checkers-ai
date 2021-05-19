@@ -1,5 +1,6 @@
 #include "userInput.h"
 #include "../../DrawBoard/board.h"
+#include "../../Utils/move.h"
 #include "../../Utils/player.h"
 #include "../../Utils/point.h"
 #include "position.h"
@@ -9,13 +10,13 @@
 #include <string>
 #include <vector>
 
-std::optional<std::vector<Point>> UserInput::GetMove(const board::Checkerboard& board, const std::vector<std::vector<Point>>& availableMoves)
+std::optional<Move> UserInput::GetMove(const board::Checkerboard& board, const std::vector<Move>& availableMoves)
 {
     while (true)
     {
         std::string input;
 
-        printf("\n%s>>> ", player::Player::GetPlayerName(board.CurrentPlayer).c_str());
+        printf("\n%s>>> ", board.CurrentPlayer.GetPlayerName().c_str());
 
         getline(std::cin, input);
         if (input == "exit")
@@ -23,13 +24,13 @@ std::optional<std::vector<Point>> UserInput::GetMove(const board::Checkerboard& 
             return std::nullopt;
         }
 
-        auto path = ParsePath(input);
+        auto parsedMove = ParseMove(input);
 
         for (const auto& move : availableMoves)
         {
-            if (move == path)
+            if (move == parsedMove)
             {
-                return path;
+                return parsedMove;
             }
         }
 
@@ -37,11 +38,11 @@ std::optional<std::vector<Point>> UserInput::GetMove(const board::Checkerboard& 
     }
 }
 
-std::vector<Point> UserInput::ParsePath(std::string input)
+Move UserInput::ParseMove(const std::string& input)
 {
     std::istringstream stream(input);
     std::string token;
-    std::vector<Point> result;
+    Move result;
 
     while (getline(stream, token, ' '))
     {
@@ -53,7 +54,7 @@ std::vector<Point> UserInput::ParsePath(std::string input)
         }
 
         Point point = { position->X, position->Y };
-        result.push_back(point);
+        result.Path.push_back(point);
     }
 
     return result;

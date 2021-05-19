@@ -25,11 +25,11 @@ class Piece
 {
 
 public:
-    player::PlayerType Player;
+    player::Player Player;
     PieceType Type;
 
     Piece();
-    Piece(const player::PlayerType& player, const PieceType& type);
+    Piece(const player::Player& player, const PieceType& type);
     std::string GetIcon();
 
 private:

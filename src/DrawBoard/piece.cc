@@ -12,7 +12,7 @@ Piece::Piece()
 {
 }
 
-Piece::Piece(const player::PlayerType& player, const PieceType& type)
+Piece::Piece(const player::Player& player, const PieceType& type)
     : Player(player)
     , Type(type)
 {
@@ -22,11 +22,11 @@ std::string Piece::GetIcon()
 {
     FieldType type;
 
-    if (Piece::Player == player::PlayerType::NONE)
+    if (Piece::Player.Type == player::PlayerType::NONE)
     {
         type = FieldType::NONE;
     }
-    else if (Piece::Player == player::PlayerType::PLAYER1)
+    else if (Piece::Player.Type == player::PlayerType::PLAYER1)
     {
         type = (Piece::Type == PieceType::MAN) ? FieldType::PLAYER1 : FieldType::PLAYER1_KING;
     }

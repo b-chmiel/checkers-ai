@@ -1,6 +1,7 @@
 #include "availableMoves.h"
 #include "../DrawBoard/board.h"
 #include "../DrawBoard/constants.h"
+#include "../Utils/move.h"
 #include "../Utils/player.h"
 #include "../Utils/point.h"
 #include <algorithm>
@@ -12,9 +13,9 @@ struct PlayerMove
     player::PlayerType player;
 };
 
-std::vector<std::vector<Point>> AvailableMoves::GetAvailableMoves(const board::Checkerboard& board, player::PlayerType player)
+std::vector<Move> AvailableMoves::GetAvailableMoves(const board::Checkerboard& board, player::PlayerType player)
 {
-    std::vector<std::vector<Point>> result;
+    std::vector<Move> result;
     for (auto y = 0; y < constants::BOARD_HEIGHT; y++)
     {
         //search only in squares that contains piece
@@ -24,7 +25,7 @@ std::vector<std::vector<Point>> AvailableMoves::GetAvailableMoves(const board::C
             {
                 auto from = Point { x, y };
 
-                auto longMoves = AddLongMoves(from, { from }, board, player);
+                auto longMoves = AddLongMoves(from, Move(from), board, player);
                 auto shortMoves = AddShortMoves(from, board, player);
 
                 result.insert(result.end(), longMoves.begin(), longMoves.end());
@@ -36,10 +37,10 @@ std::vector<std::vector<Point>> AvailableMoves::GetAvailableMoves(const board::C
     return result;
 }
 
-std::vector<std::vector<Point>> AvailableMoves::AddLongMoves(const Point& from, std::vector<Point> last, const board::Checkerboard& board, player::PlayerType player)
+std::vector<Move> AvailableMoves::AddLongMoves(const Point& from, Move last, const board::Checkerboard& board, player::PlayerType player)
 {
     Point to;
-    std::vector<std::vector<Point>> result;
+    std::vector<Move> result;
 
     for (auto directionY = -2; directionY <= 2; directionY += 4)
     {
@@ -55,10 +56,10 @@ std::vector<std::vector<Point>> AvailableMoves::AddLongMoves(const Point& from, 
 
             if (board.IsMoveValid(from, to, player))
             {
-                last.push_back(to);
+                last.Path.push_back(to);
                 result.push_back(last);
                 auto longer = AddLongMoves(to, last, board, player);
-                last.pop_back();
+                last.Path.pop_back();
                 result.insert(result.end(), longer.begin(), longer.end());
             }
         }
@@ -67,15 +68,15 @@ std::vector<std::vector<Point>> AvailableMoves::AddLongMoves(const Point& from, 
     return result;
 }
 
-bool AvailableMoves::IsCycle(const std::vector<Point>& path, const Point& point)
+bool AvailableMoves::IsCycle(const Move& move, const Point& point)
 {
-    return std::count(path.begin(), path.end(), point) > 1;
+    return std::count(move.Path.begin(), move.Path.end(), point) > 1;
 }
 
-std::vector<std::vector<Point>> AvailableMoves::AddShortMoves(const Point& from, const board::Checkerboard& board, player::PlayerType player)
+std::vector<Move> AvailableMoves::AddShortMoves(const Point& from, const board::Checkerboard& board, player::PlayerType player)
 {
     Point to;
-    std::vector<std::vector<Point>> result;
+    std::vector<Move> result;
 
     for (auto directionY = -1; directionY <= 1; directionY += 2)
     {
@@ -91,7 +92,7 @@ std::vector<std::vector<Point>> AvailableMoves::AddShortMoves(const Point& from,
 
             if (board.IsMoveValid(from, to, player))
             {
-                result.push_back({ Point { from }, Point { to } });
+                result.push_back(Move({ Point { from }, Point { to } }));
             }
         }
     }
