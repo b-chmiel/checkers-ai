@@ -1,11 +1,10 @@
 #ifndef BOARD_H
 #define BOARD_H
 
+#include "../Utils/player.h"
+#include "../Utils/point.h"
 #include "constants.h"
 #include "piece.h"
-#include "player.h"
-#include "point.h"
-#include "position.h"
 #include <map>
 #include <vector>
 
@@ -27,7 +26,6 @@ public:
     Checkerboard();
     void Show() const;
     bool IsMoveValid(const Point& from, const Point& to, player::PlayerType) const;
-    bool Move(const std::vector<Position>& path);
     bool IsGameCompleted();
     void Move(const std::vector<Point>& path);
 

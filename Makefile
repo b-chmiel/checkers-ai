@@ -71,3 +71,5 @@ clean:
 gdb: debug
 	gdb ./$(OUT_DIR)/$(LIB_NAME) -tui
 
+docker: $(LIB_NAME)
+	docker build . -t game

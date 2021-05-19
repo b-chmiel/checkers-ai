@@ -1,7 +1,7 @@
-#include "availableMoves.h"
-#include "board.h"
-#include "player.h"
-#include "userInput.h"
+#include "DrawBoard/board.h"
+#include "GetMove/User/userInput.h"
+#include "GetMove/availableMoves.h"
+#include "Utils/player.h"
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -16,7 +16,7 @@ int main()
         board.Show();
         availableMoves = AvailableMoves::GetAvailableMoves(board, board.CurrentPlayer);
 
-        auto move = UserInput::GetUserInput(board, availableMoves);
+        auto move = UserInput::GetMove(board, availableMoves);
         if (!move)
         {
             return 0;

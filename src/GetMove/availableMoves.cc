@@ -1,8 +1,8 @@
 #include "availableMoves.h"
-#include "board.h"
-#include "constants.h"
-#include "player.h"
-#include "point.h"
+#include "../DrawBoard/board.h"
+#include "../DrawBoard/constants.h"
+#include "../Utils/player.h"
+#include "../Utils/point.h"
 #include <algorithm>
 
 struct PlayerMove

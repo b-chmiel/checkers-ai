@@ -1,8 +1,8 @@
 #ifndef AVAILABLE_MOVES_H
 #define AVAILABLE_MOVES_H
 
-#include "board.h"
-#include "player.h"
+#include "../DrawBoard/board.h"
+#include "../Utils/player.h"
 #include <vector>
 
 class AvailableMoves

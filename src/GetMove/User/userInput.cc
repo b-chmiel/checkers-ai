@@ -1,14 +1,15 @@
 #include "userInput.h"
-#include "board.h"
-#include "player.h"
-#include "point.h"
+#include "../../DrawBoard/board.h"
+#include "../../Utils/player.h"
+#include "../../Utils/point.h"
+#include "position.h"
 #include <iostream>
 #include <optional>
 #include <sstream>
 #include <string>
 #include <vector>
 
-std::optional<std::vector<Point>> UserInput::GetUserInput(const board::Checkerboard& board, const std::vector<std::vector<Point>>& availableMoves)
+std::optional<std::vector<Point>> UserInput::GetMove(const board::Checkerboard& board, const std::vector<std::vector<Point>>& availableMoves)
 {
     while (true)
     {

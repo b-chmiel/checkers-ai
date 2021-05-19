@@ -1,5 +1,5 @@
 #include "position.h"
-#include "constants.h"
+#include "../../DrawBoard/constants.h"
 #include <optional>
 #include <string>
 

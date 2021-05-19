@@ -1,7 +1,7 @@
 #ifndef PIECE_H
 #define PIECE_H
 
-#include "player.h"
+#include "../Utils/player.h"
 #include <string>
 
 namespace piece
