@@ -4,6 +4,7 @@
 #include "GetMove/MinMax/alphaBeta.h"
 #include "GetMove/MinMax/minMax.h"
 #include "GetMove/User/userInput.h"
+#include "GetMove/availableMoves.h"
 #include "Utils/move.h"
 #include "Utils/player.h"
 #include <iostream>
@@ -15,17 +16,24 @@ int main()
 {
     auto board = board::Checkerboard();
     EvaluateOne eval;
-    alpha_beta::AlphaBeta alphaBeta(50);
-    minmax::MinMax minMax(3);
+    alpha_beta::AlphaBeta alphaBeta(8);
+    minmax::MinMax minMax(5);
     board.Show();
 
-    int i = 1;
+    int move = 1;
     while (true)
     {
-        std::cout << "\nAlphaBeta Evaluation: " << eval.Evaluate(board) << std::endl;
-        std::cout << "MOVE: " << i++ << std::endl;
+        if (move >= 50)
+        {
+            std::cout << "DRAW" << std::endl;
+            return 0;
+        }
 
-        auto v1 = alphaBeta.GetMove(board);
+        auto availableMoves = AvailableMoves::GetAvailableMoves(board, board.CurrentPlayer.Type);
+        std::cout << "\nAlphaBeta Evaluation: " << eval.Evaluate(board, availableMoves) << std::endl;
+        std::cout << "MOVE: " << move++ << std::endl;
+
+        auto v1 = alphaBeta.ProcessMove(board);
 
         if (!v1)
         {
@@ -40,10 +48,11 @@ int main()
             break;
         }
 
-        std::cout << "\nMinmax Evaluation: " << eval.Evaluate(board) << std::endl;
-        std::cout << "MOVE: " << i++ << std::endl;
+        availableMoves = AvailableMoves::GetAvailableMoves(board, board.CurrentPlayer.Type);
+        std::cout << "\nAlphaBeta2 Evaluation: " << eval.Evaluate(board, availableMoves) << std::endl;
+        std::cout << "MOVE: " << move++ << std::endl;
 
-        auto v2 = minMax.GetMove(board);
+        auto v2 = alphaBeta.ProcessMove(board);
 
         if (!v2)
         {

@@ -3,6 +3,7 @@
 
 #include "../../DrawBoard/board.h"
 #include "../../Utils/move.h"
+#include "../../Utils/player.h"
 #include "ratedMove.h"
 #include <optional>
 #include <vector>
@@ -19,17 +20,19 @@ class AlphaBeta
 {
 public:
     AlphaBeta(int depth);
-    std::optional<Move> GetMove(board::Checkerboard& board);
+    std::optional<Move> ProcessMove(board::Checkerboard& board);
 
 private:
     int m_Depth;
+    int m_Nodes;
+    player::Player m_Player;
 
     rated_move::rated_move_set MinMaxDecision(board::Checkerboard& board, int depth);
-    double MinimaxValue(board::Checkerboard& state, bool isMaximizingPlayer, int depth, Params& params);
+    double MinimaxValue(board::Checkerboard& state, int depth, Params params);
     bool TerminalTest(board::Checkerboard& state, const std::vector<Move>& availableMoves, int depth);
 
-    double MaxValue(board::Checkerboard& state, const std::vector<Move>& availableMoves, int depth, Params& params);
-    double MinValue(board::Checkerboard& state, const std::vector<Move>& availableMoves, int depth, Params& params);
+    double MaxValue(board::Checkerboard& state, const std::vector<Move>& availableMoves, int depth, Params params);
+    double MinValue(board::Checkerboard& state, const std::vector<Move>& availableMoves, int depth, Params params);
 };
 
 }

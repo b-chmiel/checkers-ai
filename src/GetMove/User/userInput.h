@@ -11,9 +11,9 @@
 class UserInput
 {
 public:
-    static std::optional<Move> GetMove(const board::Checkerboard& board, const std::vector<Move>& availableMoves);
+    std::optional<Move> ProcessMove(const board::Checkerboard& board) const;
 
 private:
-    static Move ParseMove(const std::string& input);
+    Move ParseMove(const std::string& input) const;
 };
 #endif

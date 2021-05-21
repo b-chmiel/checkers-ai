@@ -68,7 +68,7 @@ std::vector<Move> AvailableMoves::AddLongMoves(const Point& from, Move last, con
     return result;
 }
 
-bool AvailableMoves::IsCycle(const Move& move, const Point& point)
+inline bool AvailableMoves::IsCycle(const Move& move, const Point& point)
 {
     return std::count(move.Path.begin(), move.Path.end(), point) > 1;
 }
@@ -100,7 +100,7 @@ std::vector<Move> AvailableMoves::AddShortMoves(const Point& from, const board::
     return result;
 }
 
-bool AvailableMoves::IsPointWithinBounds(const Point& point)
+inline bool AvailableMoves::IsPointWithinBounds(const Point& point)
 {
     return point.X >= 0 && point.Y >= 0 && point.X < constants::BOARD_WIDTH && point.Y < constants::BOARD_HEIGHT;
 }

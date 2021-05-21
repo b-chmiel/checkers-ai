@@ -1,18 +1,17 @@
 #include "evaluateOne.h"
 #include "../../../DrawBoard/board.h"
 #include "../../../DrawBoard/constants.h"
+#include "../../../Utils/move.h"
 #include "../../../Utils/player.h"
-#include "../../availableMoves.h"
 #include "oneParams.h"
 #include <algorithm>
 #include <cmath>
+#include <vector>
 
 using namespace oneParams;
 
-double EvaluateOne::Evaluate(const board::Checkerboard& board) const
+double EvaluateOne::Evaluate(const board::Checkerboard& board, const std::vector<Move>& availableMoves) const
 {
-    auto availableMoves = AvailableMoves::GetAvailableMoves(board, board.CurrentPlayer.Type);
-
     if (availableMoves.size() == 0)
     {
         return 0;

@@ -3,4 +3,4 @@ export DEPTH?=5
 export ALPHA_BETA?=false
 export GAME_COUNT?=1
 export RANDOM_START?=false
-export DELTA?=0
+export DELTA?=0.01

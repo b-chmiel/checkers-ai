@@ -3,6 +3,7 @@
 #include "../../Utils/move.h"
 #include "../../Utils/player.h"
 #include "../../Utils/point.h"
+#include "../availableMoves.h"
 #include "position.h"
 #include <iostream>
 #include <optional>
@@ -10,8 +11,10 @@
 #include <string>
 #include <vector>
 
-std::optional<Move> UserInput::GetMove(const board::Checkerboard& board, const std::vector<Move>& availableMoves)
+std::optional<Move> UserInput::ProcessMove(const board::Checkerboard& board) const
 {
+    auto availableMoves = AvailableMoves::GetAvailableMoves(board, board.CurrentPlayer.Type);
+
     while (true)
     {
         std::string input;
@@ -38,7 +41,7 @@ std::optional<Move> UserInput::GetMove(const board::Checkerboard& board, const s
     }
 }
 
-Move UserInput::ParseMove(const std::string& input)
+Move UserInput::ParseMove(const std::string& input) const
 {
     std::istringstream stream(input);
     std::string token;

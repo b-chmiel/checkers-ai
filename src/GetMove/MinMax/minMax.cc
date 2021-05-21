@@ -4,6 +4,7 @@
 #include "../availableMoves.h"
 #include "EvaluationFunction/evaluateOne.h"
 #include "ratedMove.h"
+#include <iostream>
 #include <optional>
 #include <stdexcept>
 #include <vector>
@@ -12,13 +13,17 @@ using namespace minmax;
 
 MinMax::MinMax(int depth)
     : m_Depth(depth)
+    , m_Nodes(0)
 {
 }
 
-std::optional<Move> MinMax::GetMove(board::Checkerboard& board)
+std::optional<Move> MinMax::ProcessMove(board::Checkerboard& board)
 {
-    auto result = MinMaxDecision(board, m_Depth);
+    m_Nodes = 0;
 
+    auto result = MinMaxDecision(board, m_Depth - 1);
+
+    std::cout << "Nodes: " << m_Nodes << std::endl;
     if (result.size() == 0)
     {
         return std::nullopt;
@@ -29,8 +34,8 @@ std::optional<Move> MinMax::GetMove(board::Checkerboard& board)
 
 rated_move::rated_move_set MinMax::MinMaxDecision(board::Checkerboard& state, int depth)
 {
-    rated_move::rated_move_set ratedMoves(rated_move::MoveComparison {});
     double value;
+    rated_move::rated_move_set ratedMoves(rated_move::MoveComparison {});
     auto availableMoves = AvailableMoves::GetAvailableMoves(state, state.CurrentPlayer.Type);
 
     for (const auto& move : availableMoves)
@@ -48,23 +53,18 @@ double MinMax::MinimaxValue(board::Checkerboard& state, const board::Checkerboar
 {
     auto availableMoves = AvailableMoves::GetAvailableMoves(state, state.CurrentPlayer.Type);
 
-    depth--;
     if (state.IsGameCompleted() || availableMoves.size() == 0 || depth == 0)
     {
+        m_Nodes++;
         EvaluateOne e;
-        return e.Evaluate(state);
+        return e.Evaluate(state, availableMoves);
     }
     else if (state.CurrentPlayer.Type == game.CurrentPlayer.Type)
     {
-        return (*MinMaxDecision(state, depth).rbegin()).Key;
+        return (*MinMaxDecision(state, depth - 1).rbegin()).Key;
     }
     else
     {
-        return (*MinMaxDecision(state, depth).begin()).Key;
+        return (*MinMaxDecision(state, depth - 1).begin()).Key;
     }
-}
-
-int MinMax::GetWinnerPayoff(const player::Player& player, const board::Checkerboard& game)
-{
-    return player == game.CurrentPlayer ? -1 : 1;
 }

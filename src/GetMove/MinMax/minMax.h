@@ -14,13 +14,13 @@ class MinMax
 {
 public:
     MinMax(int depth);
-    std::optional<Move> GetMove(board::Checkerboard& board);
+    std::optional<Move> ProcessMove(board::Checkerboard& board);
 
 private:
     int m_Depth;
+    int m_Nodes;
 
     double MinimaxValue(board::Checkerboard& state, const board::Checkerboard& game, int depth);
-    int GetWinnerPayoff(const player::Player& player, const board::Checkerboard& game);
     rated_move::rated_move_set MinMaxDecision(board::Checkerboard& board, int depth);
 };
 }
