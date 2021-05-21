@@ -1,0 +1,6 @@
+GUI?=true
+DEPTH?=5
+ALPHA_BETA?=false
+GAME_COUNT?=1
+RANDOM_START?=false
+export DELTA=0.1

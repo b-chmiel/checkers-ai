@@ -9,23 +9,16 @@ constexpr int PlayerPiecesCount = constants::BOARD_WIDTH / 2 * (constants::BOARD
 
 struct OneParams
 {
-    int PlayerPieces;
-    int OpponentPieces;
-    int Distance;
-
-    OneParams()
-        : PlayerPieces(0)
-        , OpponentPieces(0)
-        , Distance(0)
-    {
-    }
+    int PlayerPieces = 0;
+    int OpponentPieces = 0;
+    int Distance = 0;
 };
 
 struct OneWeights
 {
-    static constexpr double PlayerPieces = 0.6;
-    static constexpr double OpponentPieces = -0.6;
-    static constexpr double Distance = 0.3;
+    static constexpr double PlayerPieces = 1;
+    static constexpr double OpponentPieces = -1;
+    static constexpr double Distance = 0;
 };
 
 struct OneMaxValues

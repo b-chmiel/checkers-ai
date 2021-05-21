@@ -29,7 +29,7 @@ double EvaluateOne::Evaluate(const board::Checkerboard& board) const
         }
     }
 
-    return CountWeights(params);
+    return CountWeights(params) + Noise();
 }
 
 double EvaluateOne::GetDistanceValue(int y, const player::Player& current) const

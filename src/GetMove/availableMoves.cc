@@ -92,7 +92,7 @@ std::vector<Move> AvailableMoves::AddShortMoves(const Point& from, const board::
 
             if (board.IsMoveValid(from, to, player))
             {
-                result.push_back(Move({ Point { from }, Point { to } }));
+                result.push_back(Move({ from, to }));
             }
         }
     }

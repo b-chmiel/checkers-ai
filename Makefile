@@ -1,3 +1,5 @@
+include Makefile.variable
+
 LIB_NAME = main
 
 CXX = ccache clang++ -std=c++17
@@ -50,7 +52,7 @@ unit_test_src:
 test: unit_test_src
 	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --track-origins=yes ./$(OUT_DIR)/unit_test_src
 
-valgrind:  debug
+valgrind:  $(LIB_NAME)
 	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --track-origins=yes ./$(OUT_DIR)/$(LIB_NAME) 
 
 valgrind-v: debug
@@ -73,3 +75,8 @@ gdb: debug
 
 docker: $(LIB_NAME)
 	docker build . -t game
+
+
+### EXPERIMENTS
+ex4: $(LIB_NAME)
+	./$(OUT_DIR)/$(LIB_NAME)

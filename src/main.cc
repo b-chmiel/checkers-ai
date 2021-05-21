@@ -1,6 +1,7 @@
 #include "DrawBoard/board.h"
 #include "GetMove/MinMax/EvaluationFunction/evaluateOne.h"
 #include "GetMove/MinMax/EvaluationFunction/evaluationFunction.h"
+#include "GetMove/MinMax/minMax.h"
 #include "GetMove/User/userInput.h"
 #include "GetMove/availableMoves.h"
 #include "Utils/move.h"
@@ -22,14 +23,23 @@ int main()
         availableMoves = AvailableMoves::GetAvailableMoves(board, board.CurrentPlayer.Type);
         std::cout << "\nEvaluation: " << eval.Evaluate(board) << std::endl;
 
-        auto move = UserInput::GetMove(board, availableMoves);
+        auto computer = minmax::MinMax::GetMove(board, availableMoves);
 
-        if (!move)
+        board.MovePiece(computer);
+
+        board.Show();
+
+        availableMoves = AvailableMoves::GetAvailableMoves(board, board.CurrentPlayer.Type);
+        std::cout << "\nEvaluation: " << eval.Evaluate(board) << std::endl;
+
+        auto human = UserInput::GetMove(board, availableMoves);
+
+        if (!human)
         {
             return 0;
         }
 
-        board.MovePiece(*move);
+        board.MovePiece(*human);
     } while (!board.IsGameCompleted() && availableMoves.size() != 0);
 
     board.Show();
