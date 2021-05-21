@@ -1,6 +1,6 @@
-GUI?=true
-DEPTH?=5
-ALPHA_BETA?=false
-GAME_COUNT?=1
-RANDOM_START?=false
-export DELTA=0.1
+export GUI?=true
+export DEPTH?=5
+export ALPHA_BETA?=false
+export GAME_COUNT?=1
+export RANDOM_START?=false
+export DELTA?=0

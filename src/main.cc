@@ -1,9 +1,9 @@
 #include "DrawBoard/board.h"
 #include "GetMove/MinMax/EvaluationFunction/evaluateOne.h"
 #include "GetMove/MinMax/EvaluationFunction/evaluationFunction.h"
+#include "GetMove/MinMax/alphaBeta.h"
 #include "GetMove/MinMax/minMax.h"
 #include "GetMove/User/userInput.h"
-#include "GetMove/availableMoves.h"
 #include "Utils/move.h"
 #include "Utils/player.h"
 #include <iostream>
@@ -14,35 +14,50 @@
 int main()
 {
     auto board = board::Checkerboard();
-    std::vector<Move> availableMoves;
     EvaluateOne eval;
+    alpha_beta::AlphaBeta alphaBeta(50);
+    minmax::MinMax minMax(3);
+    board.Show();
 
-    do
+    int i = 1;
+    while (true)
     {
-        board.Show();
-        availableMoves = AvailableMoves::GetAvailableMoves(board, board.CurrentPlayer.Type);
-        std::cout << "\nEvaluation: " << eval.Evaluate(board) << std::endl;
+        std::cout << "\nAlphaBeta Evaluation: " << eval.Evaluate(board) << std::endl;
+        std::cout << "MOVE: " << i++ << std::endl;
 
-        auto computer = minmax::MinMax::GetMove(board, availableMoves);
+        auto v1 = alphaBeta.GetMove(board);
 
-        board.MovePiece(computer);
-
-        board.Show();
-
-        availableMoves = AvailableMoves::GetAvailableMoves(board, board.CurrentPlayer.Type);
-        std::cout << "\nEvaluation: " << eval.Evaluate(board) << std::endl;
-
-        auto human = UserInput::GetMove(board, availableMoves);
-
-        if (!human)
+        if (!v1)
         {
-            return 0;
+            break;
         }
 
-        board.MovePiece(*human);
-    } while (!board.IsGameCompleted() && availableMoves.size() != 0);
+        board.MovePiece(*v1);
 
-    board.Show();
+        board.Show();
+        if (board.IsGameCompleted())
+        {
+            break;
+        }
+
+        std::cout << "\nMinmax Evaluation: " << eval.Evaluate(board) << std::endl;
+        std::cout << "MOVE: " << i++ << std::endl;
+
+        auto v2 = minMax.GetMove(board);
+
+        if (!v2)
+        {
+            break;
+        }
+        board.MovePiece(*v2);
+
+        board.Show();
+        if (board.IsGameCompleted())
+        {
+            break;
+        }
+    }
+
     auto playerLost = player::Player(board.CurrentPlayer.GetAnotherPlayer());
     printf("\nWon player: %s", playerLost.GetPlayerName().c_str());
 

@@ -3,29 +3,41 @@
 #include "../../Utils/point.h"
 #include "../availableMoves.h"
 #include "EvaluationFunction/evaluateOne.h"
+#include "ratedMove.h"
+#include <optional>
+#include <stdexcept>
 #include <vector>
 
 using namespace minmax;
 
-Move MinMax::GetMove(board::Checkerboard& board, const std::vector<Move>& availableMoves)
+MinMax::MinMax(int depth)
+    : m_Depth(depth)
 {
-    const int depth = 3;
-    auto result = MinMaxDecision(board, availableMoves, depth);
+}
+
+std::optional<Move> MinMax::GetMove(board::Checkerboard& board)
+{
+    auto result = MinMaxDecision(board, m_Depth);
+
+    if (result.size() == 0)
+    {
+        return std::nullopt;
+    }
 
     return (*result.rbegin()).Move;
 }
 
-std::set<RatedMove, MoveComparison>
-MinMax::MinMaxDecision(board::Checkerboard& board, const std::vector<Move>& availableMoves, int depth)
+rated_move::rated_move_set MinMax::MinMaxDecision(board::Checkerboard& state, int depth)
 {
-    std::set<RatedMove, MoveComparison> ratedMoves(MoveComparison {});
+    rated_move::rated_move_set ratedMoves(rated_move::MoveComparison {});
     double value;
+    auto availableMoves = AvailableMoves::GetAvailableMoves(state, state.CurrentPlayer.Type);
 
     for (const auto& move : availableMoves)
     {
-        auto boardCopy = board;
+        auto boardCopy = state;
         boardCopy.MovePiece(move);
-        value = MinimaxValue(boardCopy, board, depth);
+        value = MinimaxValue(boardCopy, state, depth);
         ratedMoves.insert({ value, move });
     }
 
@@ -37,22 +49,18 @@ double MinMax::MinimaxValue(board::Checkerboard& state, const board::Checkerboar
     auto availableMoves = AvailableMoves::GetAvailableMoves(state, state.CurrentPlayer.Type);
 
     depth--;
-    if (depth < 0)
+    if (state.IsGameCompleted() || availableMoves.size() == 0 || depth == 0)
     {
         EvaluateOne e;
         return e.Evaluate(state);
     }
-    if (state.IsGameCompleted() || availableMoves.size() == 0)
-    {
-        return GetWinnerPayoff(state.CurrentPlayer, game);
-    }
     else if (state.CurrentPlayer.Type == game.CurrentPlayer.Type)
     {
-        return (*MinMaxDecision(state, availableMoves, depth).rbegin()).Key;
+        return (*MinMaxDecision(state, depth).rbegin()).Key;
     }
     else
     {
-        return (*MinMaxDecision(state, availableMoves, depth).begin()).Key;
+        return (*MinMaxDecision(state, depth).begin()).Key;
     }
 }
 

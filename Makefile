@@ -8,8 +8,8 @@ GCOVR = gcovr
 
 COV_FLAGS = -lgcov -coverage
 GCOV_FLAGS = -r . --html --html-details
-DEBUG_FLAGS = -Wall -Wextra -pedantic -g
-RELEASE_FLAGS = -O2 -s -DNDEBUG
+DEBUG_FLAGS = -Wall -Wextra -pedantic -g 
+RELEASE_FLAGS = -O2 -s -DNDEBUG -g
 
 SRC_DIR = src
 TST_DIR = test
@@ -52,7 +52,7 @@ unit_test_src:
 test: unit_test_src
 	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --track-origins=yes ./$(OUT_DIR)/unit_test_src
 
-valgrind:  $(LIB_NAME)
+valgrind:  debug
 	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --track-origins=yes ./$(OUT_DIR)/$(LIB_NAME) 
 
 valgrind-v: debug

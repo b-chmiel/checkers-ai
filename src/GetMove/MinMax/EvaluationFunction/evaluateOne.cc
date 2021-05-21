@@ -2,13 +2,22 @@
 #include "../../../DrawBoard/board.h"
 #include "../../../DrawBoard/constants.h"
 #include "../../../Utils/player.h"
+#include "../../availableMoves.h"
 #include "oneParams.h"
+#include <algorithm>
 #include <cmath>
 
 using namespace oneParams;
 
 double EvaluateOne::Evaluate(const board::Checkerboard& board) const
 {
+    auto availableMoves = AvailableMoves::GetAvailableMoves(board, board.CurrentPlayer.Type);
+
+    if (availableMoves.size() == 0)
+    {
+        return 0;
+    }
+
     OneParams params;
     auto currentPlayer = board.CurrentPlayer;
     for (auto y = 0; y < constants::BOARD_HEIGHT; y++)
@@ -29,7 +38,8 @@ double EvaluateOne::Evaluate(const board::Checkerboard& board) const
         }
     }
 
-    return CountWeights(params) + Noise();
+    auto result = CountWeights(params) + Noise();
+    return std::min(std::max(0.0, result), 1.0);
 }
 
 double EvaluateOne::GetDistanceValue(int y, const player::Player& current) const
