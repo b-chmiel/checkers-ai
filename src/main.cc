@@ -1,10 +1,10 @@
-#include "DrawBoard/board.h"
-#include "GetMove/MinMax/EvaluationFunction/evaluateOne.h"
-#include "GetMove/MinMax/EvaluationFunction/evaluationFunction.h"
-#include "GetMove/MinMax/alphaBeta.h"
-#include "GetMove/MinMax/minMax.h"
-#include "GetMove/User/userInput.h"
-#include "GetMove/availableMoves.h"
+#include "Board/board.h"
+#include "MoveInput/MinMax/EvaluationFunction/evaluateOne.h"
+#include "MoveInput/MinMax/EvaluationFunction/evaluationFunction.h"
+#include "MoveInput/MinMax/alphaBeta.h"
+#include "MoveInput/MinMax/minMax.h"
+#include "MoveInput/User/userInput.h"
+#include "MoveInput/availableMoves.h"
 #include "Utils/move.h"
 #include "Utils/player.h"
 #include <iostream>
@@ -16,7 +16,7 @@ int main()
 {
     auto board = board::Checkerboard();
     EvaluateOne eval;
-    alpha_beta::AlphaBeta alphaBeta(8);
+    alpha_beta::AlphaBeta alphaBeta(6);
     minmax::MinMax minMax(5);
     board.Show();
 
@@ -49,10 +49,10 @@ int main()
         }
 
         availableMoves = AvailableMoves::GetAvailableMoves(board, board.CurrentPlayer.Type);
-        std::cout << "\nAlphaBeta2 Evaluation: " << eval.Evaluate(board, availableMoves) << std::endl;
+        std::cout << "\nMinMax Evaluation: " << eval.Evaluate(board, availableMoves) << std::endl;
         std::cout << "MOVE: " << move++ << std::endl;
 
-        auto v2 = alphaBeta.ProcessMove(board);
+        auto v2 = minMax.ProcessMove(board);
 
         if (!v2)
         {

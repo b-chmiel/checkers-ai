@@ -17,7 +17,7 @@ MinMax::MinMax(int depth)
 {
 }
 
-std::optional<Move> MinMax::ProcessMove(board::Checkerboard& board)
+std::optional<Move> MinMax::ProcessMove(const board::Checkerboard& board)
 {
     m_Nodes = 0;
 
@@ -32,7 +32,7 @@ std::optional<Move> MinMax::ProcessMove(board::Checkerboard& board)
     return (*result.rbegin()).Move;
 }
 
-rated_move::rated_move_set MinMax::MinMaxDecision(board::Checkerboard& state, int depth)
+rated_move::rated_move_set MinMax::MinMaxDecision(const board::Checkerboard& state, int depth)
 {
     double value;
     rated_move::rated_move_set ratedMoves(rated_move::MoveComparison {});

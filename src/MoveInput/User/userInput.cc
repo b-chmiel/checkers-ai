@@ -1,5 +1,5 @@
 #include "userInput.h"
-#include "../../DrawBoard/board.h"
+#include "../../Board/board.h"
 #include "../../Utils/move.h"
 #include "../../Utils/player.h"
 #include "../../Utils/point.h"
@@ -11,7 +11,7 @@
 #include <string>
 #include <vector>
 
-std::optional<Move> UserInput::ProcessMove(const board::Checkerboard& board) const
+std::optional<Move> UserInput::ProcessMove(const board::Checkerboard& board)
 {
     auto availableMoves = AvailableMoves::GetAvailableMoves(board, board.CurrentPlayer.Type);
 

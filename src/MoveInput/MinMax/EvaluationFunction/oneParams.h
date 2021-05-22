@@ -1,7 +1,7 @@
 #ifndef FUNCTION_ONE_PARAMS_H
 #define FUNCTION_ONE_PARAMS_H
 
-#include "../../../DrawBoard/constants.h"
+#include "../../../Board/constants.h"
 
 namespace oneParams
 {

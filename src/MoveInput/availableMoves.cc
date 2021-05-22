@@ -1,6 +1,6 @@
 #include "availableMoves.h"
-#include "../DrawBoard/board.h"
-#include "../DrawBoard/constants.h"
+#include "../Board/board.h"
+#include "../Board/constants.h"
 #include "../Utils/move.h"
 #include "../Utils/player.h"
 #include "../Utils/point.h"

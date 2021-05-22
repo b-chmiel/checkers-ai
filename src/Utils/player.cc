@@ -1,5 +1,5 @@
 #include "player.h"
-#include "../DrawBoard/constants.h"
+#include "../Board/constants.h"
 #include <string>
 
 using namespace player;

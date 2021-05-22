@@ -1,7 +1,7 @@
 #ifndef POSITION_H
 #define POSITION_H
 
-#include "../../DrawBoard/constants.h"
+#include "../../Board/constants.h"
 #include <optional>
 #include <set>
 

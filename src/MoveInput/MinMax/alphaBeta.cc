@@ -1,5 +1,5 @@
 #include "alphaBeta.h"
-#include "../../DrawBoard/board.h"
+#include "../../Board/board.h"
 #include "../../Utils/move.h"
 #include "../availableMoves.h"
 #include "EvaluationFunction/evaluateOne.h"
@@ -18,7 +18,7 @@ AlphaBeta::AlphaBeta(int depth)
 {
 }
 
-std::optional<Move> AlphaBeta::ProcessMove(board::Checkerboard& state)
+std::optional<Move> AlphaBeta::ProcessMove(const board::Checkerboard& state)
 {
     m_Nodes = 0;
     m_Player = state.CurrentPlayer;
@@ -35,7 +35,7 @@ std::optional<Move> AlphaBeta::ProcessMove(board::Checkerboard& state)
     return (*result.rbegin()).Move;
 }
 
-rated_move::rated_move_set AlphaBeta::MinMaxDecision(board::Checkerboard& state, int depth)
+rated_move::rated_move_set AlphaBeta::MinMaxDecision(const board::Checkerboard& state, int depth)
 {
     double value;
     rated_move::rated_move_set ratedMoves(rated_move::MoveComparison {});

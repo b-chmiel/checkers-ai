@@ -1,7 +1,7 @@
 #ifndef AVAILABLE_MOVES_H
 #define AVAILABLE_MOVES_H
 
-#include "../DrawBoard/board.h"
+#include "../Board/board.h"
 #include "../Utils/move.h"
 #include "../Utils/player.h"
 #include <vector>

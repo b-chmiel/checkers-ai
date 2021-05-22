@@ -1,9 +1,10 @@
 #ifndef ALPHA_BETA_H
 #define ALPHA_BETA_H
 
-#include "../../DrawBoard/board.h"
+#include "../../Board/board.h"
 #include "../../Utils/move.h"
 #include "../../Utils/player.h"
+#include "../moveInput.h"
 #include "ratedMove.h"
 #include <optional>
 #include <vector>
@@ -16,18 +17,18 @@ struct Params
     double Beta;
 };
 
-class AlphaBeta
+class AlphaBeta : public MoveInput
 {
 public:
     AlphaBeta(int depth);
-    std::optional<Move> ProcessMove(board::Checkerboard& board);
+    std::optional<Move> ProcessMove(const board::Checkerboard& board) override;
 
 private:
     int m_Depth;
     int m_Nodes;
     player::Player m_Player;
 
-    rated_move::rated_move_set MinMaxDecision(board::Checkerboard& board, int depth);
+    rated_move::rated_move_set MinMaxDecision(const board::Checkerboard& board, int depth);
     double MinimaxValue(board::Checkerboard& state, int depth, Params params);
     bool TerminalTest(board::Checkerboard& state, const std::vector<Move>& availableMoves, int depth);
 

@@ -1,7 +1,7 @@
 #ifndef EVALUATION_FUNCTION_H
 #define EVALUATION_FUNCTION_H
 
-#include "../../../DrawBoard/board.h"
+#include "../../../Board/board.h"
 #include "../../../Utils/move.h"
 #include <random>
 #include <vector>

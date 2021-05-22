@@ -1,17 +1,16 @@
 #ifndef USER_INPUT_H
 #define USER_INPUT_H
 
-#include "../../DrawBoard/board.h"
+#include "../../Board/board.h"
 #include "../../Utils/move.h"
-#include "../../Utils/point.h"
+#include "../moveInput.h"
 #include <optional>
 #include <string>
-#include <vector>
 
-class UserInput
+class UserInput : public MoveInput
 {
 public:
-    std::optional<Move> ProcessMove(const board::Checkerboard& board) const;
+    std::optional<Move> ProcessMove(const board::Checkerboard& board) override;
 
 private:
     Move ParseMove(const std::string& input) const;
