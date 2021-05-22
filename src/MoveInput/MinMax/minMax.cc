@@ -2,18 +2,20 @@
 #include "../../Utils/move.h"
 #include "../../Utils/point.h"
 #include "../availableMoves.h"
-#include "EvaluationFunction/evaluateOne.h"
+#include "EvaluationFunction/evaluationFunction.h"
 #include "ratedMove.h"
 #include <iostream>
+#include <memory>
 #include <optional>
 #include <stdexcept>
 #include <vector>
 
 using namespace minmax;
 
-MinMax::MinMax(int depth)
+MinMax::MinMax(int depth, std::shared_ptr<EvaluationFunction> eval)
     : m_Depth(depth)
     , m_Nodes(0)
+    , m_EvalFunction(eval)
 {
 }
 
@@ -23,7 +25,7 @@ std::optional<Move> MinMax::ProcessMove(const board::Checkerboard& board)
 
     auto result = MinMaxDecision(board, m_Depth - 1);
 
-    std::cout << "Nodes: " << m_Nodes << std::endl;
+    // std::cout << "Nodes: " << m_Nodes << std::endl;
     if (result.size() == 0)
     {
         return std::nullopt;
@@ -56,8 +58,7 @@ double MinMax::MinimaxValue(board::Checkerboard& state, const board::Checkerboar
     if (state.IsGameCompleted() || availableMoves.size() == 0 || depth == 0)
     {
         m_Nodes++;
-        EvaluateOne e;
-        return e.Evaluate(state, availableMoves);
+        return m_EvalFunction->Evaluate(state, availableMoves);
     }
     else if (state.CurrentPlayer.Type == game.CurrentPlayer.Type)
     {

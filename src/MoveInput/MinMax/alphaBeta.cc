@@ -2,19 +2,21 @@
 #include "../../Board/board.h"
 #include "../../Utils/move.h"
 #include "../availableMoves.h"
-#include "EvaluationFunction/evaluateOne.h"
+#include "EvaluationFunction/evaluationFunction.h"
 #include "ratedMove.h"
 #include <algorithm>
 #include <iostream>
+#include <memory>
 #include <optional>
 #include <stdexcept>
 #include <vector>
 
 using namespace alpha_beta;
 
-AlphaBeta::AlphaBeta(int depth)
+AlphaBeta::AlphaBeta(int depth, std::shared_ptr<EvaluationFunction> eval)
     : m_Depth(depth)
     , m_Nodes(0)
+    , m_EvalFunction(eval)
 {
 }
 
@@ -25,7 +27,7 @@ std::optional<Move> AlphaBeta::ProcessMove(const board::Checkerboard& state)
 
     auto result = MinMaxDecision(state, m_Depth - 1);
 
-    std::cout << "Nodes: " << m_Nodes << std::endl;
+    // std::cout << "Nodes: " << m_Nodes << std::endl;
 
     if (result.size() == 0)
     {
@@ -60,8 +62,7 @@ double AlphaBeta::MinimaxValue(board::Checkerboard& state, int depth, Params par
     if (TerminalTest(state, availableMoves, depth))
     {
         m_Nodes++;
-        EvaluateOne e;
-        return e.Evaluate(state, availableMoves);
+        return m_EvalFunction->Evaluate(state, availableMoves);
     }
     else if (state.CurrentPlayer == m_Player)
     {

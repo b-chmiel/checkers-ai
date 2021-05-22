@@ -5,7 +5,9 @@
 #include "../../Utils/move.h"
 #include "../../Utils/player.h"
 #include "../moveInput.h"
+#include "EvaluationFunction/evaluationFunction.h"
 #include "ratedMove.h"
+#include <memory>
 #include <optional>
 #include <vector>
 
@@ -20,13 +22,15 @@ struct Params
 class AlphaBeta : public MoveInput
 {
 public:
-    AlphaBeta(int depth);
+    AlphaBeta(int depth, std::shared_ptr<EvaluationFunction>);
     std::optional<Move> ProcessMove(const board::Checkerboard& board) override;
+    ~AlphaBeta() = default;
 
 private:
     int m_Depth;
     int m_Nodes;
     player::Player m_Player;
+    std::shared_ptr<EvaluationFunction> m_EvalFunction;
 
     rated_move::rated_move_set MinMaxDecision(const board::Checkerboard& board, int depth);
     double MinimaxValue(board::Checkerboard& state, int depth, Params params);

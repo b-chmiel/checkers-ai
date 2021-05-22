@@ -9,5 +9,6 @@ class MoveInput
 {
 public:
     virtual std::optional<Move> ProcessMove(const board::Checkerboard&) = 0;
+    virtual ~MoveInput() = default;
 };
 #endif

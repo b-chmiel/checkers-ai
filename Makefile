@@ -2,7 +2,7 @@ include Makefile.variable
 
 LIB_NAME = main
 
-CXX = ccache clang++ -std=c++17
+CXX = ccache clang++ -std=c++20
 GCOV = gcov
 GCOVR = gcovr
 

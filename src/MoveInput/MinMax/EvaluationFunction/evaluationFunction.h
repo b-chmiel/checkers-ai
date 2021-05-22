@@ -23,6 +23,8 @@ public:
         std::uniform_real_distribution<> dis(-d, d);
         return dis(rd);
     };
+
+    virtual ~EvaluationFunction() = default;
 };
 
 #endif

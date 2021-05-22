@@ -11,6 +11,7 @@ class UserInput : public MoveInput
 {
 public:
     std::optional<Move> ProcessMove(const board::Checkerboard& board) override;
+    ~UserInput() = default;
 
 private:
     Move ParseMove(const std::string& input) const;

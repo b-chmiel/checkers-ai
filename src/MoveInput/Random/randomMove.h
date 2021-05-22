@@ -10,5 +10,6 @@ class RandomMove : public MoveInput
 {
 public:
     std::optional<Move> ProcessMove(const board::Checkerboard& board) override;
+    ~RandomMove() = default;
 };
 #endif

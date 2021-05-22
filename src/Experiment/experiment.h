@@ -5,12 +5,20 @@ namespace experiment
 {
 struct Params
 {
+    bool IsMoveTiming;
+    bool IsGameTiming;
+    bool IsProgressiveDepth;
+    int RandomMoves;
+    int GameCount;
+    double Delta;
+    bool AlphaBeta;
+    int MaxDepth;
 };
 
 class Experiment
 {
 public:
-    void Play(const Params&) const;
+    virtual void Perform() const = 0;
 };
 }
 
