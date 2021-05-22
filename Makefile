@@ -78,8 +78,8 @@ docker: $(LIB_NAME)
 
 
 ### EXPERIMENTS
-ex1: 
-	mkdir -p $(OUT_DIR)
-	$(CXX) $(RELEASE_FLAGS) $(SRCS) -I. -o $(OUT_DIR)/$(LIB_NAME) 
-	rm -f *.
-	./$(OUT_DIR)/$(LIB_NAME)
+# ex1: 
+# 	mkdir -p $(OUT_DIR)
+# 	$(CXX) $(RELEASE_FLAGS) $(SRCS) -I. -o $(OUT_DIR)/$(LIB_NAME) 
+# 	rm -f *.
+# 	./$(OUT_DIR)/$(LIB_NAME)

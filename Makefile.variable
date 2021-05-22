@@ -1,6 +1,3 @@
-export GUI?=true
-export DEPTH?=5
-export ALPHA_BETA?=false
-export GAME_COUNT?=1
-export RANDOM_START?=false
-export DELTA?=0.01
+# export TIME_EFFICIENCY_A=1
+# export TIME_EFFICIENCY_B=1
+export SKILLS_VS_DEPTH=1

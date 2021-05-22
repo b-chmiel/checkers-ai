@@ -1,15 +1,15 @@
-#ifndef TIME_EFFICIENCY_H
-#define TIME_EFFICIENCY_H
+#ifndef SKILLS_VS_TREE_DEPTH_H
+#define SKILLS_VS_TREE_DEPTH_H
 
 #include "experiment.h"
 
-class TimeEfficiency
+class SkillsVsTreeDepth
 {
 private:
     experiment::Params m_Params;
 
 public:
-    TimeEfficiency(const experiment::Params& params)
+    SkillsVsTreeDepth(const experiment::Params& params)
         : m_Params(params) {};
 
     template <class InputMethodA, class InputMethodB>

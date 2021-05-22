@@ -1,5 +1,5 @@
-#ifndef TIME_EFFICIENCY_TCC
-#define TIME_EFFICIENCY_TCC
+#ifndef SKILLS_VS_TREE_DEPTH_IMPL
+#define SKILLS_VS_TREE_DEPTH_IMPL
 
 #include "../Board/board.h"
 #include "../MoveInput/MinMax/EvaluationFunction/evaluateOne.h"
@@ -11,14 +11,14 @@
 #include "Utils/gameStats.h"
 #include "Utils/progressBar.h"
 #include "experiment.h"
-#include "timeEfficiency.h"
+#include "skillsVsTreeDepth.h"
 #include <cmath>
 #include <iostream>
 #include <memory>
 #include <vector>
 
 template <class InputMethodA, class InputMethodB>
-void TimeEfficiency::Perform() const
+void SkillsVsTreeDepth::Perform() const
 {
     auto player1Eval = std::make_shared<EvaluateOne>();
     auto player2Eval = std::make_shared<EvaluateOne>();
@@ -26,11 +26,11 @@ void TimeEfficiency::Perform() const
     std::vector<game_stats::TotalGameStats> stats;
     stats.reserve(m_Params.MaxDepth - 2);
 
-    for (auto depth = 1; depth <= m_Params.MaxDepth; depth++)
+    for (auto depth = 1; depth <= m_Params.MaxDepth - 1; depth++)
     {
         std::cout << "\nDepth: " << depth << std::endl;
 
-        auto player1Ai = std::make_shared<InputMethodA>(depth, player1Eval);
+        auto player1Ai = std::make_shared<InputMethodA>(depth + 1, player1Eval);
         auto player2Ai = std::make_shared<InputMethodB>(depth, player2Eval);
 
         auto gameParams = game::GameParams {
