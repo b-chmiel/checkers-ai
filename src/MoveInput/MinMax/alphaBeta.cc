@@ -20,10 +20,11 @@ AlphaBeta::AlphaBeta(int depth, std::shared_ptr<EvaluationFunction> eval)
 {
 }
 
-std::optional<Move> AlphaBeta::ProcessMove(const board::Checkerboard& state)
+std::optional<Move> AlphaBeta::ProcessMove(const board::Checkerboard& state, int moveCount)
 {
     m_Nodes = 0;
     m_Player = state.CurrentPlayer;
+    m_MoveCount = moveCount;
 
     auto result = MinMaxDecision(state, m_Depth - 1);
 
@@ -62,7 +63,7 @@ double AlphaBeta::MinimaxValue(board::Checkerboard& state, int depth, Params par
     if (TerminalTest(state, availableMoves, depth))
     {
         m_Nodes++;
-        return m_EvalFunction->Evaluate(state, availableMoves);
+        return m_EvalFunction->Evaluate(state, availableMoves, m_MoveCount);
     }
     else if (state.CurrentPlayer == m_Player)
     {

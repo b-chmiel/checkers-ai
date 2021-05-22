@@ -6,7 +6,7 @@
 #include <random>
 #include <vector>
 
-std::optional<Move> RandomMove::ProcessMove(const board::Checkerboard& board)
+std::optional<Move> RandomMove::ProcessMove(const board::Checkerboard& board, int)
 {
     auto availableMoves = AvailableMoves::GetAvailableMoves(board, board.CurrentPlayer.Type);
 

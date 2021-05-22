@@ -11,7 +11,7 @@
 #include <string>
 #include <vector>
 
-std::optional<Move> UserInput::ProcessMove(const board::Checkerboard& board)
+std::optional<Move> UserInput::ProcessMove(const board::Checkerboard& board, int)
 {
     auto availableMoves = AvailableMoves::GetAvailableMoves(board, board.CurrentPlayer.Type);
 

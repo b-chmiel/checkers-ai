@@ -29,6 +29,7 @@ public:
     bool IsMoveValid(const Point& from, const Point& to, player::PlayerType) const;
     bool IsGameCompleted();
     void MovePiece(const Move& path);
+    player::PlayerType GetWinner();
 
 private:
     std::map<player::PlayerType, int> m_PiecesAlive;

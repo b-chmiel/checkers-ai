@@ -19,9 +19,10 @@ MinMax::MinMax(int depth, std::shared_ptr<EvaluationFunction> eval)
 {
 }
 
-std::optional<Move> MinMax::ProcessMove(const board::Checkerboard& board)
+std::optional<Move> MinMax::ProcessMove(const board::Checkerboard& board, int moveCount)
 {
     m_Nodes = 0;
+    m_MoveCount = moveCount;
 
     auto result = MinMaxDecision(board, m_Depth - 1);
 
@@ -58,7 +59,7 @@ double MinMax::MinimaxValue(board::Checkerboard& state, const board::Checkerboar
     if (state.IsGameCompleted() || availableMoves.size() == 0 || depth == 0)
     {
         m_Nodes++;
-        return m_EvalFunction->Evaluate(state, availableMoves);
+        return m_EvalFunction->Evaluate(state, availableMoves, m_MoveCount);
     }
     else if (state.CurrentPlayer.Type == game.CurrentPlayer.Type)
     {

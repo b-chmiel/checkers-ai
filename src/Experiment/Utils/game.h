@@ -26,9 +26,8 @@ public:
 
 private:
     GameParams m_Params;
-    static const int m_DrawThreshold = 500;
 
-    bool PlayMove(std::shared_ptr<MoveInput> method, board::Checkerboard& board) const;
+    bool PlayMove(std::shared_ptr<MoveInput> method, board::Checkerboard& board, int moveCount) const;
 };
 }
 #endif

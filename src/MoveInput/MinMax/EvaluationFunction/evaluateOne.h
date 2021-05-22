@@ -10,7 +10,7 @@
 class EvaluateOne : public EvaluationFunction
 {
 public:
-    double Evaluate(const board::Checkerboard&, const std::vector<Move>& availableMoves) const override;
+    double Evaluate(const board::Checkerboard&, const std::vector<Move>& availableMoves, int moveCount) const override;
 
 private:
     double GetDistanceValue(int y, const player::Player&) const;

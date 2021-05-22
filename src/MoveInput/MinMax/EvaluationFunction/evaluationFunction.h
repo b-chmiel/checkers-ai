@@ -9,7 +9,7 @@
 class EvaluationFunction
 {
 public:
-    virtual double Evaluate(const board::Checkerboard&, const std::vector<Move>& availableMoves) const = 0;
+    virtual double Evaluate(const board::Checkerboard&, const std::vector<Move>& availableMoves, int moveCount) const = 0;
     double Noise() const
     {
         auto delta = std::getenv("DELTA");

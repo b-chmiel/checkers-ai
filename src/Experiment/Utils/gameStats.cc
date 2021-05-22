@@ -1,5 +1,7 @@
 #include "gameStats.h"
+#include <iomanip>
 #include <iostream>
+#include <vector>
 
 using namespace game_stats;
 
@@ -28,17 +30,43 @@ void TotalGameStats::AppendGame(const GameStats& stats)
     {
         m_Player1Wins++;
     }
+    if (stats.Winner == player::PlayerType::NONE)
+    {
+        // m_GameCount++;
+        // m_Player1Wins++;
+    }
 
     Player1WinRate = (double)m_Player1Wins / (double)m_GameCount;
 }
 
 void TotalGameStats::Show() const
 {
-    std::cout << std::endl
-              << "d\t"
-              << "AvgMoveDuration\t"
-              << "GameDuration\t"
-              << "[s]" << std::endl;
+    int width = 20;
+    std::cout << m_Depth
+              << std::setw(width)
+              << AvgMoveDuration
+              << std::setw(width)
+              << GameDuration
+              << std::setw(width)
+              << Player1WinRate
+              << std::endl;
+}
 
-    std::cout << m_Depth << "\t" << AvgMoveDuration << "\t" << GameDuration << "\t" << Player1WinRate << std::endl;
+void TotalGameStats::ShowMany(const std::vector<TotalGameStats>& stats)
+{
+    int width = 20;
+
+    std::cout << std::endl
+              << "d"
+              << std::setw(width)
+              << "AvgMoveDuration[s]"
+              << std::setw(width)
+              << "GameDuration[s]"
+              << std::setw(width)
+              << "Player1WinRate" << std::endl;
+
+    for (const auto& stat : stats)
+    {
+        stat.Show();
+    }
 }

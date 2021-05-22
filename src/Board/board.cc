@@ -289,3 +289,11 @@ piece::Piece Checkerboard::GetFieldPiece(const Point& position) const
 {
     return Checkerboard::State[position.Y][position.X];
 }
+
+player::PlayerType Checkerboard::GetWinner()
+{
+    int piecesPlayer1 = Checkerboard::m_PiecesAlive[player::PLAYER1];
+    int piecesPlayer2 = Checkerboard::m_PiecesAlive[player::PLAYER2];
+
+    return piecesPlayer1 > piecesPlayer2 ? player::PlayerType::PLAYER1 : player::PlayerType::PLAYER2;
+}

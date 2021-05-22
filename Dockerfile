@@ -8,4 +8,4 @@ RUN apk add --no-cache \
 
 COPY build/ App/
 WORKDIR /App
-ENTRYPOINT ["./main"]
+ENTRYPOINT ["/bin/sh"]

@@ -3,15 +3,16 @@
 
 #include "experiment.h"
 
-class TimeEfficiency : public experiment::Experiment
+class TimeEfficiency
 {
 public:
     TimeEfficiency(const experiment::Params&);
-    void Perform() const override;
+
+    template <class InputMethod>
+    void Perform() const;
 
 private:
     experiment::Params m_Params;
-    void NoAlphaBeta() const;
 };
 
 #endif

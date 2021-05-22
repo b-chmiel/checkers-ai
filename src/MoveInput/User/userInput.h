@@ -10,7 +10,7 @@
 class UserInput : public MoveInput
 {
 public:
-    std::optional<Move> ProcessMove(const board::Checkerboard& board) override;
+    std::optional<Move> ProcessMove(const board::Checkerboard& board, int moveCount) override;
     ~UserInput() = default;
 
 private:

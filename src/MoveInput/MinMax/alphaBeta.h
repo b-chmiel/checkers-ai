@@ -23,12 +23,13 @@ class AlphaBeta : public MoveInput
 {
 public:
     AlphaBeta(int depth, std::shared_ptr<EvaluationFunction>);
-    std::optional<Move> ProcessMove(const board::Checkerboard& board) override;
+    std::optional<Move> ProcessMove(const board::Checkerboard& board, int moveCount) override;
     ~AlphaBeta() = default;
 
 private:
     int m_Depth;
     int m_Nodes;
+    int m_MoveCount;
     player::Player m_Player;
     std::shared_ptr<EvaluationFunction> m_EvalFunction;
 

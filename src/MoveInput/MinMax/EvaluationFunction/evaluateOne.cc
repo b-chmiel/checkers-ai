@@ -10,14 +10,15 @@
 
 using namespace oneParams;
 
-double EvaluateOne::Evaluate(const board::Checkerboard& board, const std::vector<Move>& availableMoves) const
+double EvaluateOne::Evaluate(const board::Checkerboard& board, const std::vector<Move>& availableMoves, int moveCount) const
 {
-    if (availableMoves.size() == 0)
+    if (availableMoves.size() == 0 || moveCount >= constants::DRAW_THRESHOLD)
     {
         return 0;
     }
 
     OneParams params;
+
     auto currentPlayer = board.CurrentPlayer;
     for (auto y = 0; y < constants::BOARD_HEIGHT; y++)
     {
