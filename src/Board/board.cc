@@ -125,8 +125,8 @@ void Checkerboard::PrintLettersBelow() const
 
 bool Checkerboard::IsMoveValid(const Point& from, const Point& to, player::PlayerType) const
 {
-    auto startField = Checkerboard::State[from.Y][from.X];
-    auto endField = Checkerboard::State[to.Y][to.X];
+    auto& startField = Checkerboard::State[from.Y][from.X];
+    auto& endField = Checkerboard::State[to.Y][to.X];
 
     if (endField.Player.Type != player::NONE)
     {
@@ -155,8 +155,8 @@ bool Checkerboard::IsMoveValid(const Point& from, const Point& to, player::Playe
 PieceMoveType Checkerboard::GetMoveType(const Point& from, const Point& to) const
 {
     const int differenceHorizontal = std::abs(from.X - to.X);
-    const int shortLength = 1;
-    const int longLength = 2;
+    constexpr int shortLength = 1;
+    constexpr int longLength = 2;
 
     if (differenceHorizontal == shortLength)
     {
@@ -188,7 +188,7 @@ bool Checkerboard::ValidateLongMove(const Point& from, const Point& to) const
 {
     auto x = (to.X + from.X) / 2;
     auto y = (to.Y + from.Y) / 2;
-    auto interPiece = Checkerboard::State[y][x];
+    auto& interPiece = Checkerboard::State[y][x];
 
     if (interPiece.Player == Checkerboard::CurrentPlayer || interPiece.Player == player::PlayerType::NONE)
     {

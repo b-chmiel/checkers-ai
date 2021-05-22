@@ -10,7 +10,7 @@
 int main()
 {
     auto params = experiment::Params {
-        .RandomMoves = 8,
+        .RandomMoves = 0,
         .GameCount = 10,
         .Delta = 0.01,
         .MaxDepth = 5

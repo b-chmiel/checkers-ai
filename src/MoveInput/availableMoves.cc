@@ -56,8 +56,8 @@ std::vector<Move> AvailableMoves::AddLongMoves(const Point& from, Move last, con
 
             if (board.IsMoveValid(from, to, player))
             {
-                last.Path.push_back(to);
-                result.push_back(last);
+                last.Path.emplace_back(to);
+                result.emplace_back(last);
                 auto longer = AddLongMoves(to, last, board, player);
                 last.Path.pop_back();
                 result.insert(result.end(), longer.begin(), longer.end());
@@ -92,7 +92,7 @@ std::vector<Move> AvailableMoves::AddShortMoves(const Point& from, const board::
 
             if (board.IsMoveValid(from, to, player))
             {
-                result.push_back(Move({ from, to }));
+                result.emplace_back(Move({ from, to }));
             }
         }
     }
