@@ -1,5 +1,5 @@
-#ifndef SKILLS_VS_TREE_DEPTH_IMPL
-#define SKILLS_VS_TREE_DEPTH_IMPL
+#ifndef STRATEGY_EFFICIENCY_IMPL
+#define STRATEGY_EFFICIENCY_IMPL
 
 #include "../Board/board.h"
 #include "../MoveInput/MinMax/EvaluationFunction/evaluateOne.h"
@@ -11,26 +11,29 @@
 #include "Utils/gameStats.h"
 #include "Utils/progressBar.h"
 #include "experiment.h"
-#include "skillsVsTreeDepth.h"
+#include "strategyEfficiency.h"
 #include <cmath>
 #include <iostream>
 #include <memory>
 #include <vector>
 
-template <class InputMethodA, class InputMethodB>
-void SkillsVsTreeDepth::Perform() const
+template <class Strategy>
+void StrategyEfficiency::Perform() const
 {
-    auto player1Eval = std::make_shared<EvaluateOne>(m_Params.Delta);
-    auto player2Eval = std::make_shared<EvaluateOne>(m_Params.Delta);
+    const double minDelta = 0.0;
+    const double maxDelta = 0.5;
+
+    auto normalVersion = std::make_shared<Strategy>(0.01);
+    auto player1Ai = std::make_shared<alpha_beta::AlphaBeta>(m_Params.MaxDepth, normalVersion);
 
     std::vector<game_stats::TotalGameStats> stats;
 
-    for (auto depth = 1; depth <= m_Params.MaxDepth - 1; depth++)
+    for (auto delta = minDelta; delta < maxDelta; delta += 0.05)
     {
-        std::cout << "\nDepth: " << depth << std::endl;
+        std::cout << "\nDelta: " << delta << std::endl;
 
-        auto player1Ai = std::make_shared<InputMethodA>(depth + 1, player1Eval);
-        auto player2Ai = std::make_shared<InputMethodB>(depth, player2Eval);
+        auto randomizedVersion = std::make_shared<Strategy>(delta);
+        auto player2Ai = std::make_shared<alpha_beta::AlphaBeta>(m_Params.MaxDepth, randomizedVersion);
 
         auto gameParams = game::GameParams {
             .player1Ai = player1Ai,
@@ -39,7 +42,7 @@ void SkillsVsTreeDepth::Perform() const
         };
 
         auto game = game::Game(gameParams);
-        auto totalStats = game_stats::TotalGameStats(depth);
+        auto totalStats = game_stats::TotalGameStats(delta);
         ProgressBar progress(m_Params.GameCount, 1);
 
         progress.Print();

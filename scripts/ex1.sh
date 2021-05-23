@@ -1,0 +1,10 @@
+#!/bin/sh
+
+unset TIME_EFFICIENCY_A
+unset TIME_EFFICIENCY_B
+unset STRATEGY_EFFICIENCY
+unset SKILLS_VS_DEPTH
+export TIME_EFFICIENCY_A=1
+export TIME_EFFICIENCY_B=1
+
+./main

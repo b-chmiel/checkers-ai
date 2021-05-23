@@ -10,6 +10,11 @@
 
 using namespace oneParams;
 
+EvaluateOne::EvaluateOne(double delta)
+    : m_Delta(delta)
+{
+}
+
 double EvaluateOne::Evaluate(const board::Checkerboard& board, const std::vector<Move>& availableMoves, int moveCount) const
 {
     if (availableMoves.size() == 0 || moveCount >= constants::DRAW_THRESHOLD)
@@ -38,7 +43,7 @@ double EvaluateOne::Evaluate(const board::Checkerboard& board, const std::vector
         }
     }
 
-    auto result = CountWeights(params) + Noise();
+    auto result = CountWeights(params) + Noise(m_Delta);
     return std::min(std::max(0.0, result), 1.0);
 }
 

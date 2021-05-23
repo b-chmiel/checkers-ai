@@ -10,17 +10,10 @@ class EvaluationFunction
 {
 public:
     virtual double Evaluate(const board::Checkerboard&, const std::vector<Move>& availableMoves, int moveCount) const = 0;
-    double Noise() const
+    double Noise(double delta) const
     {
-        auto delta = std::getenv("DELTA");
-        if (delta == NULL)
-        {
-            return 0;
-        }
-
         std::random_device rd;
-        double d = std::stod(delta);
-        std::uniform_real_distribution<> dis(-d, d);
+        std::uniform_real_distribution<> dis(-delta, delta);
         return dis(rd);
     };
 

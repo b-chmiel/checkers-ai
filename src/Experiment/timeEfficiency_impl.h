@@ -20,11 +20,10 @@
 template <class InputMethodA, class InputMethodB>
 void TimeEfficiency::Perform() const
 {
-    auto player1Eval = std::make_shared<EvaluateOne>();
-    auto player2Eval = std::make_shared<EvaluateOne>();
+    auto player1Eval = std::make_shared<EvaluateOne>(m_Params.Delta);
+    auto player2Eval = std::make_shared<EvaluateOne>(m_Params.Delta);
 
     std::vector<game_stats::TotalGameStats> stats;
-    stats.reserve(m_Params.MaxDepth - 2);
 
     for (auto depth = 1; depth <= m_Params.MaxDepth; depth++)
     {
