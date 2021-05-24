@@ -18,13 +18,13 @@
 #include <vector>
 
 template <class Strategy>
-void StrategyEfficiency::Perform() const
+void StrategyEfficiency::Perform(int maxDepth) const
 {
     const double minDelta = 0.0;
     const double maxDelta = 0.5;
 
     auto normalVersion = std::make_shared<Strategy>(0.01);
-    auto player1Ai = std::make_shared<alpha_beta::AlphaBeta>(m_Params.MaxDepth, normalVersion);
+    auto player1Ai = std::make_shared<alpha_beta::AlphaBeta>(maxDepth, normalVersion);
 
     std::vector<game_stats::TotalGameStats> stats;
 
@@ -33,7 +33,7 @@ void StrategyEfficiency::Perform() const
         std::cout << "\nDelta: " << delta << std::endl;
 
         auto randomizedVersion = std::make_shared<Strategy>(delta);
-        auto player2Ai = std::make_shared<alpha_beta::AlphaBeta>(m_Params.MaxDepth, randomizedVersion);
+        auto player2Ai = std::make_shared<alpha_beta::AlphaBeta>(maxDepth, randomizedVersion);
 
         auto gameParams = game::GameParams {
             .player1Ai = player1Ai,

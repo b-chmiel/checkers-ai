@@ -2,14 +2,14 @@ include Makefile.variable
 
 LIB_NAME = main
 
-CXX = ccache clang++ -std=c++20
+CXX = ccache g++ -std=c++2a
 GCOV = gcov
 GCOVR = gcovr
 
 COV_FLAGS = -lgcov -coverage
 GCOV_FLAGS = -r . --html --html-details
 DEBUG_FLAGS = -Wall -Wextra -pedantic -g 
-RELEASE_FLAGS = -O2 -s -DNDEBUG -g
+RELEASE_FLAGS = -O2 -s -DNDEBUG -flto -march=native
 
 SRC_DIR = src
 TST_DIR = test
@@ -40,7 +40,7 @@ runDebug: debug
 	./build/main
 
 analyze:
-	$(CXX) --analyze -Xanalyzer -analyzer-output=text $(SRCS)
+	clang++ -std=c++20 --analyze -Xanalyzer -analyzer-output=text $(SRCS)
 
 unit_test_src: 
 	$(CXX) -c $(TST_LIBS) 

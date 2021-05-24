@@ -23,17 +23,26 @@ Position::Position(int x, int y)
 
 std::optional<Position> Position::Construct(const std::string position)
 {
-    if (position.length() != 2)
+    if (position.length() == 2)
     {
-        return std::nullopt;
+        char letter = position.at(0);
+        int number = position.at(1) - '0';
+
+        if (Position::Validate(letter, number))
+        {
+            return Position(letter, number);
+        }
     }
 
-    char letter = position.at(0);
-    int number = position.at(1) - '0';
-
-    if (Position::Validate(letter, number))
+    if (position.length() == 3)
     {
-        return Position(letter, number);
+        char letter = position.at(0);
+        int number = std::stoi(position.substr(1, 2));
+
+        if (Position::Validate(letter, number))
+        {
+            return Position(letter, number);
+        }
     }
 
     return std::nullopt;

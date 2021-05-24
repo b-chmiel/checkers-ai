@@ -18,14 +18,14 @@
 #include <vector>
 
 template <class InputMethodA, class InputMethodB>
-void SkillsVsTreeDepth::Perform() const
+void SkillsVsTreeDepth::Perform(int maxDepth) const
 {
     auto player1Eval = std::make_shared<EvaluateOne>(m_Params.Delta);
     auto player2Eval = std::make_shared<EvaluateOne>(m_Params.Delta);
 
     std::vector<game_stats::TotalGameStats> stats;
 
-    for (auto depth = 1; depth <= m_Params.MaxDepth - 1; depth++)
+    for (auto depth = 1; depth <= maxDepth - 1; depth++)
     {
         std::cout << "\nDepth: " << depth << std::endl;
 

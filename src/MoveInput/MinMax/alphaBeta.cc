@@ -35,7 +35,7 @@ std::optional<Move> AlphaBeta::ProcessMove(const board::Checkerboard& state, int
         return std::nullopt;
     }
 
-    return (*result.rbegin()).Move;
+    return (*result.rbegin()).MMove;
 }
 
 rated_move::rated_move_set AlphaBeta::MinMaxDecision(const board::Checkerboard& state, int depth)

@@ -8,7 +8,12 @@ struct Params
     int RandomMoves;
     int GameCount;
     double Delta;
-    int MaxDepth;
+};
+
+class Experiment
+{
+public:
+    virtual void Perform(int maxDepth) const = 0;
 };
 }
 

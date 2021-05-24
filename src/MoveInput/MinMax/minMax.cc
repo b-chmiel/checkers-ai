@@ -32,7 +32,7 @@ std::optional<Move> MinMax::ProcessMove(const board::Checkerboard& board, int mo
         return std::nullopt;
     }
 
-    return (*result.rbegin()).Move;
+    return (*result.rbegin()).MMove;
 }
 
 rated_move::rated_move_set MinMax::MinMaxDecision(const board::Checkerboard& state, int depth)

@@ -5,6 +5,7 @@
 #include "../../Utils/player.h"
 #include "gameStats.h"
 #include "timer.h"
+#include <cstdlib>
 #include <optional>
 
 using namespace game;
@@ -19,9 +20,10 @@ game_stats::GameStats Game::PlayGame() const
     game_stats::GameStats stats;
     auto board = board::Checkerboard();
 
-#ifdef GUI
-    board.Show();
-#endif
+    if (std::getenv("GUI"))
+    {
+        board.Show();
+    }
 
     auto timeGame = timer::Timer();
     auto timePlayer1 = timer::Timer();
@@ -87,9 +89,10 @@ bool Game::PlayMove(std::shared_ptr<MoveInput> method, board::Checkerboard& boar
 
     board.MovePiece(*move);
 
-#ifdef GUI
-    board.Show();
-#endif
+    if (std::getenv("GUI"))
+    {
+        board.Show();
+    }
 
     return true;
 }

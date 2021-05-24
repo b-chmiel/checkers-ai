@@ -8,7 +8,7 @@ namespace rated_move
 struct RatedMove
 {
     double Key;
-    Move Move;
+    Move MMove;
 };
 
 struct MoveComparison final

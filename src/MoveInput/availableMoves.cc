@@ -76,7 +76,8 @@ inline bool AvailableMoves::IsCycle(const Move& move, const Point& point)
 std::vector<Move> AvailableMoves::AddShortMoves(const Point& from, const board::Checkerboard& board, player::PlayerType player)
 {
     Point to;
-    std::vector<Move> result;
+    std::vector<Move> result; // 4 directions
+    result.reserve(4);
 
     for (auto directionY = -1; directionY <= 1; directionY += 2)
     {

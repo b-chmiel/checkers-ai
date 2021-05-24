@@ -30,13 +30,8 @@ void TotalGameStats::AppendGame(const GameStats& stats)
     {
         m_Player1Wins++;
     }
-    if (stats.Winner == player::PlayerType::NONE)
-    {
-        // m_GameCount++;
-        // m_Player1Wins++;
-    }
 
-    Player1WinRate = (double)m_Player1Wins / (double)m_GameCount;
+    Player1WinRate = ((double)m_Player1Wins) / ((double)m_GameCount);
 }
 
 void TotalGameStats::Show() const
@@ -49,6 +44,9 @@ void TotalGameStats::Show() const
               << GameDuration
               << std::setw(width)
               << Player1WinRate
+              << std::setw(width)
+              << m_Player1Wins << "/"
+              << m_GameCount
               << std::endl;
 }
 

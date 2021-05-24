@@ -13,7 +13,7 @@ public:
         : m_Params(params) {};
 
     template <class Strategy>
-    void Perform() const;
+    void Perform(int maxDepth) const;
 };
 
 #endif

@@ -1,28 +1,28 @@
-#include "evaluateOne.h"
+#include "evaluateTwo.h"
 #include "../../../Board/board.h"
 #include "../../../Board/constants.h"
 #include "../../../Utils/move.h"
 #include "../../../Utils/player.h"
-#include "oneParams.h"
+#include "twoParams.h"
 #include <algorithm>
 #include <cmath>
 #include <vector>
 
-using namespace oneParams;
+using namespace twoParams;
 
-EvaluateOne::EvaluateOne(double delta)
+EvaluateTwo::EvaluateTwo(double delta)
     : m_Delta(delta)
 {
 }
 
-double EvaluateOne::Evaluate(const board::Checkerboard& board, const std::vector<Move>& availableMoves, int moveCount) const
+double EvaluateTwo::Evaluate(const board::Checkerboard& board, const std::vector<Move>& availableMoves, int moveCount) const
 {
     if (availableMoves.size() == 0 || moveCount >= constants::DRAW_THRESHOLD)
     {
         return 0;
     }
 
-    OneParams params;
+    TwoParams params;
 
     auto currentPlayer = board.CurrentPlayer;
     for (auto y = 0; y < constants::BOARD_HEIGHT; y++)
@@ -34,6 +34,7 @@ double EvaluateOne::Evaluate(const board::Checkerboard& board, const std::vector
             if (field.Player == currentPlayer)
             {
                 params.PlayerPieces++;
+                params.Distance += GetDistanceValue(y, field.Player);
             }
             else if (field.Player.Type != player::NONE)
             {
@@ -46,16 +47,17 @@ double EvaluateOne::Evaluate(const board::Checkerboard& board, const std::vector
     return std::min(std::max(0.0, result), 1.0);
 }
 
-double EvaluateOne::GetDistanceValue(int y, const player::Player& current) const
+double EvaluateTwo::GetDistanceValue(int y, const player::Player& current) const
 {
     return constants::BOARD_HEIGHT - 1 - std::abs(current.MaxY() - y);
 }
 
-double EvaluateOne::CountWeights(const OneParams& params) const
+double EvaluateTwo::CountWeights(const TwoParams& params) const
 {
     double result = 0.0;
-    result += params.PlayerPieces * OneWeights::PlayerPieces;
-    result += params.OpponentPieces * OneWeights::OpponentPieces;
+    result += params.PlayerPieces * TwoWeights::PlayerPieces;
+    result += params.OpponentPieces * TwoWeights::OpponentPieces;
+    result += params.Distance * TwoWeights::Distance;
 
-    return (result - OneMaxValues::MinValue) / (OneMaxValues::MaxValue - OneMaxValues::MinValue);
+    return (result - TwoMaxValues::MinValue) / (TwoMaxValues::MaxValue - TwoMaxValues::MinValue);
 }
