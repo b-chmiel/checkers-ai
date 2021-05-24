@@ -28,7 +28,7 @@ std::optional<Move> AlphaBeta::ProcessMove(const board::Checkerboard& state, int
 
     auto result = MinMaxDecision(state, m_Depth - 1);
 
-    // std::cout << "Nodes: " << m_Nodes << std::endl;
+    // std::cout << "AlphaBeta Nodes: " << m_Nodes << std::endl;
 
     if (result.size() == 0)
     {
@@ -67,11 +67,11 @@ double AlphaBeta::MinimaxValue(board::Checkerboard& state, int depth, Params par
     }
     else if (state.CurrentPlayer == m_Player)
     {
-        return MaxValue(state, availableMoves, depth, params);
+        return MaxValue(state, availableMoves, depth - 1, params);
     }
     else
     {
-        return MinValue(state, availableMoves, depth, params);
+        return MinValue(state, availableMoves, depth - 1, params);
     }
 }
 
@@ -86,7 +86,7 @@ double AlphaBeta::MaxValue(board::Checkerboard& state, const std::vector<Move>& 
     {
         auto copyState = state;
         copyState.MovePiece(move);
-        params.Alpha = std::max(params.Alpha, MinimaxValue(copyState, depth - 1, params));
+        params.Alpha = std::max(params.Alpha, MinimaxValue(copyState, depth, params));
         if (params.Alpha >= params.Beta)
         {
             break;
@@ -102,7 +102,7 @@ double AlphaBeta::MinValue(board::Checkerboard& state, const std::vector<Move>& 
     {
         auto copyState = state;
         copyState.MovePiece(move);
-        params.Beta = std::min(params.Beta, MinimaxValue(copyState, depth - 1, params));
+        params.Beta = std::min(params.Beta, MinimaxValue(copyState, depth, params));
         if (params.Alpha >= params.Beta)
         {
             break;

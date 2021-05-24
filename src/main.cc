@@ -1,4 +1,6 @@
 #include "Experiment/experiment.h"
+#include "Experiment/oneGame.h"
+#include "Experiment/oneGame_impl.h"
 #include "Experiment/skillsVsTreeDepth.h"
 #include "Experiment/skillsVsTreeDepth_impl.h"
 #include "Experiment/strategies.h"
@@ -27,7 +29,7 @@ int main()
     auto params = experiment::Params {
         .RandomMoves = 10,
         .GameCount = gameCount,
-        .Delta = 0.01,
+        .Delta = 0,
     };
 
     if (std::getenv("TIME_EFFICIENCY_A"))
@@ -77,6 +79,9 @@ int main()
         const int depth = std::stoi(std::getenv("USER_INPUT"));
         ex.Perform<alpha_beta::AlphaBeta, UserInput>(depth);
     }
+
+    // auto ex = OneGame(params);
+    // ex.Perform<alpha_beta::AlphaBeta, alpha_beta::AlphaBeta>(8);
 
     return 0;
 }

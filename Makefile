@@ -2,14 +2,14 @@ include Makefile.variable
 
 LIB_NAME = main
 
-CXX = ccache g++ -std=c++2a
+CXX = ccache clang++ -std=c++20
 GCOV = gcov
 GCOVR = gcovr
 
 COV_FLAGS = -lgcov -coverage
 GCOV_FLAGS = -r . --html --html-details
 DEBUG_FLAGS = -Wall -Wextra -pedantic -g 
-RELEASE_FLAGS = -O2 -s -DNDEBUG -flto -march=native
+RELEASE_FLAGS = -O2 -s -DNDEBUG -flto 
 
 SRC_DIR = src
 TST_DIR = test
@@ -75,11 +75,3 @@ gdb: debug
 
 docker: $(LIB_NAME)
 	docker build . -t game
-
-
-### EXPERIMENTS
-# ex1: 
-# 	mkdir -p $(OUT_DIR)
-# 	$(CXX) $(RELEASE_FLAGS) $(SRCS) -I. -o $(OUT_DIR)/$(LIB_NAME) 
-# 	rm -f *.
-# 	./$(OUT_DIR)/$(LIB_NAME)

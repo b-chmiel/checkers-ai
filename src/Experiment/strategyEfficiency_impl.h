@@ -21,14 +21,14 @@ template <class Strategy>
 void StrategyEfficiency::Perform(int maxDepth) const
 {
     const double minDelta = 0.0;
-    const double maxDelta = 0.5;
+    const double maxDelta = 0.25;
 
-    auto normalVersion = std::make_shared<Strategy>(0.01);
+    auto normalVersion = std::make_shared<Strategy>(0);
     auto player1Ai = std::make_shared<alpha_beta::AlphaBeta>(maxDepth, normalVersion);
 
     std::vector<game_stats::TotalGameStats> stats;
 
-    for (auto delta = minDelta; delta < maxDelta; delta += 0.05)
+    for (auto delta = minDelta; delta < maxDelta; delta += 0.025)
     {
         std::cout << "\nDelta: " << delta << std::endl;
 
