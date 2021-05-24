@@ -50,6 +50,7 @@ void SkillsVsTreeDepth::Perform(int maxDepth) const
         }
 
         stats.push_back(totalStats);
+        game_stats::TotalGameStats::ShowMany(stats);
     }
 
     game_stats::TotalGameStats::ShowMany(stats);

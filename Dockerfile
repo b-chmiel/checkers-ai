@@ -7,7 +7,8 @@ RUN apk update \
 COPY build/ App/
 COPY scripts/ App/
 
-RUN chmod +x App/ex1.sh \
+RUN chmod +x App/ex1A.sh \
+    && chmod +x App/ex1B.sh \
     && chmod +x App/ex2.sh \
     && chmod +x App/ex3.sh \
     && chmod +x App/ex4.sh 
