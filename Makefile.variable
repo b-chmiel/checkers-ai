@@ -1,8 +1,8 @@
 #export TIME_EFFICIENCY_A=5
 #export TIME_EFFICIENCY_B=7
-# export SKILLS_VS_DEPTH=1
-#export STRATEGY_EFFICIENCY=1
-export STRATEGIES=6
+export SKILLS_VS_DEPTH=4
+#export STRATEGY_EFFICIENCY=4
+#export STRATEGIES=5
 #export GUI=1
 #export USER_INPUT=1
-#export GAME_COUNT = 1
+export GAME_COUNT = 50

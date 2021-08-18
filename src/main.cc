@@ -21,15 +21,22 @@
 int main()
 {
     int gameCount = 10;
+    double delta = 0.0;
+
     if (std::getenv("GAME_COUNT"))
     {
         gameCount = std::stoi(std::getenv("GAME_COUNT"));
     }
 
+    if (std::getenv("DELTA"))
+    {
+        delta = std::stod(std::getenv("DELTA"));
+    }
+
     auto params = experiment::Params {
         .RandomMoves = 10,
         .GameCount = gameCount,
-        .Delta = 0,
+        .Delta = delta,
     };
 
     if (std::getenv("TIME_EFFICIENCY_A"))
@@ -48,12 +55,12 @@ int main()
         ex.Perform<alpha_beta::AlphaBeta, alpha_beta::AlphaBeta>(depth);
     }
 
-    if (std::getenv("SKILLS_VS_DEPTH"))
+    // if (std::getenv("SKILLS_VS_DEPTH"))
     {
         std::cout << "SKILLS_VS_DEPTH" << std::endl;
         auto ex = SkillsVsTreeDepth(params);
-        const int depth = std::stoi(std::getenv("SKILLS_VS_DEPTH"));
-        ex.Perform<alpha_beta::AlphaBeta, alpha_beta::AlphaBeta>(depth);
+        const int depth = 5; //std::stoi(std::getenv("SKILLS_VS_DEPTH"));
+        ex.Perform<minmax::MinMax, minmax::MinMax>(depth);
     }
 
     if (std::getenv("STRATEGY_EFFICIENCY"))
@@ -81,7 +88,7 @@ int main()
     }
 
     // auto ex = OneGame(params);
-    // ex.Perform<alpha_beta::AlphaBeta, alpha_beta::AlphaBeta>(8);
+    // ex.Perform<alpha_beta::AlphaBeta, alpha_beta::AlphaBeta>(1);
 
     return 0;
 }

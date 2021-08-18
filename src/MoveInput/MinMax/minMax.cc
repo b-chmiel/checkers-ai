@@ -38,7 +38,7 @@ std::optional<Move> MinMax::ProcessMove(const board::Checkerboard& board, int mo
 rated_move::rated_move_set MinMax::MinMaxDecision(const board::Checkerboard& state, int depth)
 {
     double value;
-    rated_move::rated_move_set ratedMoves(rated_move::MoveComparison {});
+    rated_move::rated_move_set ratedMoves(rated_move::SortIncreasing {});
     auto availableMoves = AvailableMoves::GetAvailableMoves(state, state.CurrentPlayer.Type);
 
     for (const auto& move : availableMoves)

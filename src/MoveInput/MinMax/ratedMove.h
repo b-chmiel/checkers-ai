@@ -11,7 +11,7 @@ struct RatedMove
     Move MMove;
 };
 
-struct MoveComparison final
+struct SortIncreasing final
 {
     inline bool operator()(const RatedMove& left, const RatedMove& right) const
     {
@@ -19,7 +19,7 @@ struct MoveComparison final
     }
 };
 
-using rated_move_set = std::set<rated_move::RatedMove, rated_move::MoveComparison>;
+using rated_move_set = std::set<rated_move::RatedMove, rated_move::SortIncreasing>;
 }
 
 #endif

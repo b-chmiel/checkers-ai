@@ -15,9 +15,10 @@ std::optional<Move> RandomMove::ProcessMove(const board::Checkerboard& board, in
         return std::nullopt;
     }
 
-    std::default_random_engine generator;
-    std::uniform_int_distribution<int> distribution(0, availableMoves.size());
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_int_distribution<int> distribution(0, availableMoves.size() - 1);
 
-    auto index = distribution(generator);
+    auto index = distribution(rng);
     return availableMoves[index];
 }
